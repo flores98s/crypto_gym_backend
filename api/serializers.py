@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import TipoMembresia
+from .models import *
 
 
 class TipoMembresiaSerializer(serializers.Serializer):
@@ -7,3 +7,7 @@ class TipoMembresiaSerializer(serializers.Serializer):
         model = TipoMembresia
         fields = ['nombre','precio','detalle']
 
+class ClienteSerializer(serializers.Serializer):
+    class Meta:
+        model = Cliente
+        fields = "__all__"
