@@ -7,3 +7,8 @@ from .models import *
 
 admin.site.register(TipoMembresia)
 admin.site.register(Cliente)
+admin.site.register(TipoDocumentoCliente)
+admin.site.register(TipoGeneroCliente)
+admin.site.register(TipoSangreCliente)
+admin.site.register(Medidas)
+
