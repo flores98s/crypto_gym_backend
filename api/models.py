@@ -8,9 +8,12 @@ class Membresia(models.Model):
 
 # Modelo TipoMembresia.
 class TipoMembresia(models.Model):
-    nombre = models.CharField(max_length=50)
+    nombreMembresia = models.CharField(max_length=50)
     precio = models.IntegerField()
     descripcion = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombreMembresia
 
 # Modelo PrecioHistoricoMembresia.
 class PrecioHistoricoMembresia(models.Model):
@@ -26,11 +29,24 @@ class Descuento(models.Model):
     cantidadDescuento = models.IntegerField()
 
 #Modelo Cupones.
-class Cupones(models.Model):
+class Cupon(models.Model):
     NombreCodigoCupon = models.CharField(max_length=50)
     fechaInicioCupon = models.DateTimeField()
     fechaExpiracionCupon = models.DateTimeField()
     descuentoCupon = models.IntegerField()
+
+    class Meta:
+        verbose_name_plural = "Cupones"
+
+    def __str__(self):
+        return self.NombreCodigoCupon
+
+# Modelo TipoSangreCliente.
+class TipoSangreCliente(models.Model):
+    nombreSangre = models.CharField(max_length=50)
+   
+    def __str__(self):
+        return self.nombreSangre
 
 # Modelo Cliente.
 class Cliente(models.Model):
@@ -43,8 +59,11 @@ class Cliente(models.Model):
     correo = models.EmailField()
     numeroTelefono = models.IntegerField()
     genero = models.IntegerField()
-    grupoSanguineo = models.IntegerField()
+    tipoSangre = models.ForeignKey(TipoSangreCliente, on_delete=models.SET_NULL, null=True, blank=True)
     creado = models.DateField(default=timezone.now )
+
+    def __str__(self):
+        return self.nombres+" "+self.apellidos
 
 #Modelo LogCliente.
 class LogCliente(models.Model):
@@ -52,18 +71,17 @@ class LogCliente(models.Model):
     informacion = models.CharField(max_length=100)
     fecha = models.DateTimeField()
     hora = models.TimeField()
-
+    
 # Modelo TipoDocumentoCliente.
 class TipoDocumentoCliente(models.Model):
     nombreDocumento = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return self.nombreDocumento
 
 # Modelo TipoGeneroCliente.
 class TipoGeneroCliente(models.Model):
     nombreGenero = models.CharField(max_length=50)
-
-# Modelo TipoSangreCliente.
-class TipoSangreCliente(models.Model):
-    nombreSangre = models.CharField(max_length=50)
 
 # Modelo Medidas.
 class Medidas(models.Model):
@@ -82,6 +100,9 @@ class Medidas(models.Model):
     pierna = models.DecimalField(decimal_places=3,max_digits=10)
     pantorrilla= models.DecimalField(decimal_places=3,max_digits=10)
 
+    class Meta:
+        verbose_name_plural = "Medidas"
+
 # Modelo Empleado.
 class Empleado(models.Model):
     nombres = models.CharField(max_length=50)
@@ -93,9 +114,15 @@ class Empleado(models.Model):
     genero = models.IntegerField()
     documento = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.nombres+" "+self.apellidos
+
 # Modelo TipoGenero.
 class TipoGenero(models.Model):
     nombre = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nombre
 
 # Modelo Planilla.
 class Planilla(models.Model):
@@ -110,3 +137,58 @@ class DetallePlanilla(models.Model):
     idDeduccion = models.IntegerField()
     idSueldo = models.IntegerField()
     detalles = models.CharField(max_length=50)
+
+# ------------------- MODELOS DE EMPLEADO ------------------- #
+
+#Modelo TipoDocumento.
+class DocumentoEmpleado(models.Model):
+    nombreDocumento = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nombreDocumento
+
+# Modelo Empleados Cargos
+class EmpleadoCargo(models.Model):
+    fechaInicio = models.DateTimeField()
+    fechaFinal = models.DateTimeField()
+
+#Modelo Cargo
+class Cargo(models.Model):
+    nombreCargo = models.CharField(max_length=50)
+    salario = models.DecimalField(decimal_places=3,max_digits=10)
+
+    def __str__(self):
+        return self.nombreCargo
+
+# Modelo Asignacion Clase
+class AsignacionClase(models.Model):
+    horario = models.DateTimeField()
+    fecha = models.DateField()
+
+# Modelo Clase Grupal
+class ClaseGrupal(models.Model):
+    nombreClase = models.CharField(max_length=50)
+    cantidadAlumnos = models.IntegerField()
+    class Meta :
+        verbose_name_plural = "Clases Grupales"
+
+    def __str__(self):
+        return self.nombreClase
+
+# Modelo Salon 
+class Salon(models.Model):
+    nombreSalon = models.CharField(max_length=50)
+    cantidadAlumnos = models.IntegerField()
+
+    class Meta:
+        verbose_name_plural = "Salones"
+
+    def __str__(self):
+        return self.nombreSalon
+
+#Modelo Logcliente
+class LogEmpleado(models.Model):
+    accion = models.CharField(max_length=50)
+    informacion = models.CharField(max_length=100)
+    fecha = models.DateTimeField()
+    hora = models.TimeField()

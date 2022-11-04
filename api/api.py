@@ -28,9 +28,9 @@ class DescuentoViewSet(viewsets.ModelViewSet):
 
 # api CuponesViewSet
 class CuponesViewSet(viewsets.ModelViewSet):
-    queryset = Cupones.objects.all()
+    queryset = Cupon.objects.all()
     permission_classes = [permissions.AllowAny]
-    serializer_class = CuponesSerializer
+    serializer_class = CuponSerializer
 
 # api ClienteViewSet
 class ClienteViewSet(viewsets.ModelViewSet):
@@ -54,19 +54,19 @@ class TipoDocumentoClienteViewSet(viewsets.ModelViewSet):
 class TipoGeneroClienteViewSet(viewsets.ModelViewSet):
     queryset = TipoGeneroCliente.objects.all()
     permission_classes = [permissions.AllowAny]
-    serializers_class = TipoGeneroClienteSerializer
+    serializer_class = TipoGeneroClienteSerializer
 
 # api TipoSangreClienteViewSet
 class TipoSangreClienteViewSet(viewsets.ModelViewSet):
     queryset = TipoGeneroCliente.objects.all()
     permission_classes = [permissions.AllowAny]
-    serializers_class = TipoSangreClienteSerializer
+    serializer_class = TipoSangreClienteSerializer
 
 # api MedidasViewSet
 class MedidasViewSet(viewsets.ModelViewSet):
     queryset = Medidas.objects.all()
     permission_classes = [permissions.AllowAny]
-    serializer_class = TipoSangreClienteSerializer
+    serializer_class = MedidasSerializer
 
 # api  EmpleadoViewSet
 class EmpleadoViewSet(viewsets.ModelViewSet):
@@ -92,3 +92,45 @@ class DetallePlanillaViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     serializer_class = DetallePlanillaSerializer
 
+# ------------------- VIEWSET DE EMPLEADO ------------------- #
+# viewset documentoEmpleadoViewSet
+class DocumentEmpleadoViewSet(viewsets.ModelViewSet):
+    queryset = DocumentoEmpleado.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = DocumentoEmpleadoSerializer
+
+# viewset EmpleadoCargoViewSetViewSet
+class EmpleadoCargoViewSet(viewsets.ModelViewSet):
+    queryset = EmpleadoCargo.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = EmpleadoCargoSerializer
+
+# viewset CargoViewSet
+class CargoViewSet(viewsets.ModelViewSet):
+    queryset = Cargo.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = CargoSerializer
+
+# viewset AsignacionClaseViewSet
+class AsignacionClaseViewSet(viewsets.ModelViewSet):
+    queryset = AsignacionClase.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = AsignacionClaseSerializer
+
+# viewset ClaseGrupalViewSet
+class ClaseGrupalViewSet(viewsets.ModelViewSet):
+    queryset = ClaseGrupal.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = ClaseGrupalSerializer
+
+# viewset SalonViewSet
+class SalonViewSet(viewsets.ModelViewSet):
+    queryset = Salon.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = SalonSerializer
+
+# viewset LogEmpleadoViewSet
+class LogEmpleadoViewSet(viewsets.ModelViewSet):
+    queryset = LogEmpleado.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = LogEmpleadoSerializer

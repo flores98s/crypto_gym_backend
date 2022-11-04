@@ -26,9 +26,9 @@ class DescuentoSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 #Serializar CuponesSerializer
-class CuponesSerializer(serializers.ModelSerializer):
+class CuponSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Cupones
+        model = Cupon
         fields = "__all__"
 
 #Serializar ClienteSerializer
@@ -91,3 +91,46 @@ class DetallePlanillaSerializer(serializers.ModelSerializer):
         model = DetallePlanilla
         fields = "__all__"
 
+# ------------------- SERIALIZERS DE EMPLEADO ------------------- #
+
+# serializar TipoDocumentoEmpleadoSerializer
+class DocumentoEmpleadoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DocumentoEmpleado
+        fields = "__all__"
+
+# serializar EmpleadoCargo
+class EmpleadoCargoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmpleadoCargo
+        fields = "__all__"
+
+# serializar TipoCargo
+class CargoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cargo
+        fields = "__all__"
+
+# serializar TipoClase
+class AsignacionClaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AsignacionClase
+        fields = "__all__"
+
+# serializar ClaseGrupal
+class ClaseGrupalSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = ClaseGrupal
+            fields = "__all__"
+    
+# serializar Salon
+class SalonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Salon
+        fields = "__all__"
+
+# serializar LogEmpleado
+class LogEmpleadoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LogEmpleado
+        fields = "__all__"   

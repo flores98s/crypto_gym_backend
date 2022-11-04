@@ -34,6 +34,20 @@ router.register('tipogenero',TipoGeneroViewSet,'tipogeneros')
 router.register('planilla',PlanillaViewSet,'planillas')
 # url detalleplanilla
 router.register('detalleplanilla',DetallePlanillaViewSet,'detalleplanillas')
-
+# ------------------- URLS DE EMPLEADO ------------------- #
+# url documentoempleado
+router.register('documentoempleado',DocumentEmpleadoViewSet,'documentoempleados')
+# url empleadocargo
+router.register('empleadocargo',EmpleadoCargoViewSet,'empleadoscargos')
+# url cargo
+router.register('cargo',CargoViewSet,'cargos')
+# url asignacionclase
+router.register('asignacionclase',AsignacionClaseViewSet,'asignacionclases')
+# url clasegrupal
+router.register('clasegrupal',ClaseGrupalViewSet,'clasesgrupales')
+# url salon
+router.register('salon',SalonViewSet,'salones')
+# url logcliente
+router.register('logempleado',LogEmpleadoViewSet,'logempleados')
 
 urlpatterns = router.urls
