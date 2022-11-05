@@ -186,7 +186,7 @@ class Salon(models.Model):
     def __str__(self):
         return self.nombreSalon
 
-#Modelo Logcliente
+#Modelo LogEmpleado
 class LogEmpleado(models.Model):
     accion = models.CharField(max_length=50)
     informacion = models.CharField(max_length=100)
