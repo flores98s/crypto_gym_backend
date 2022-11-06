@@ -58,7 +58,7 @@ class TipoGeneroClienteViewSet(viewsets.ModelViewSet):
 
 # api TipoSangreClienteViewSet
 class TipoSangreClienteViewSet(viewsets.ModelViewSet):
-    queryset = TipoGeneroCliente.objects.all()
+    queryset = TipoSangreCliente.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = TipoSangreClienteSerializer
 

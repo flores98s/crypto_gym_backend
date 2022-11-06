@@ -1,10 +1,6 @@
 from django.db import models
 from django.utils import timezone
 
-# Modelo Membresia.
-class Membresia(models.Model):
-    fechaInicio = models.DateTimeField()
-    fechaFinal = models.DateTimeField()
 
 # Modelo TipoMembresia.
 class TipoMembresia(models.Model):
@@ -20,6 +16,16 @@ class PrecioHistoricoMembresia(models.Model):
     fechaInicial = models.DateTimeField()
     fechaFinal = models.DateTimeField()
     precio = models.IntegerField()
+    nombreMembresias = models.ForeignKey(TipoMembresia, on_delete=models.SET_NULL, null=True, blank=True)
+
+# Modelo Membresia.
+class Membresia(models.Model):
+    fechaInicio = models.DateTimeField()
+    fechaFinal = models.DateTimeField()
+    tipoMembresia = models.ForeignKey(TipoMembresia, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return self.tipoMembresia.nombreMembresia
 
 #Modelo Descuento.
 class Descuento(models.Model):
@@ -48,6 +54,20 @@ class TipoSangreCliente(models.Model):
     def __str__(self):
         return self.nombreSangre
 
+# Modelo TipoGeneroCliente.
+class TipoGeneroCliente(models.Model):
+    nombreGenero = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nombreGenero
+
+# Modelo TipoDocumentoCliente.
+class TipoDocumentoCliente(models.Model):
+    nombreDocumento = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return self.nombreDocumento
+
 # Modelo Cliente.
 class Cliente(models.Model):
     nombres = models.CharField(max_length=50)
@@ -55,12 +75,13 @@ class Cliente(models.Model):
     clave = models.CharField(max_length=50)
     foto = models.CharField(max_length=50)
     fechaNacimiento = models.DateField()
-    documento = models.CharField(max_length=50)
+    documento = models.ForeignKey(TipoDocumentoCliente, on_delete=models.SET_NULL, null=True, blank=True)
     correo = models.EmailField()
     numeroTelefono = models.IntegerField()
-    genero = models.IntegerField()
+    genero = models.ForeignKey(TipoGeneroCliente, on_delete=models.SET_NULL, null=True, blank=True)
     tipoSangre = models.ForeignKey(TipoSangreCliente, on_delete=models.SET_NULL, null=True, blank=True)
     creado = models.DateField(default=timezone.now )
+    membresia = models.ForeignKey(Membresia, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.nombres+" "+self.apellidos
@@ -72,17 +93,6 @@ class LogCliente(models.Model):
     fecha = models.DateTimeField()
     hora = models.TimeField()
     
-# Modelo TipoDocumentoCliente.
-class TipoDocumentoCliente(models.Model):
-    nombreDocumento = models.CharField(max_length=50)
-    
-    def __str__(self):
-        return self.nombreDocumento
-
-# Modelo TipoGeneroCliente.
-class TipoGeneroCliente(models.Model):
-    nombreGenero = models.CharField(max_length=50)
-
 # Modelo Medidas.
 class Medidas(models.Model):
     fechaMedida = models.DateTimeField()
@@ -134,8 +144,6 @@ class DetallePlanilla(models.Model):
     sueldobruto = models.IntegerField()
     deduccion = models.IntegerField()
     bonificaciones = models.IntegerField()
-    idDeduccion = models.IntegerField()
-    idSueldo = models.IntegerField()
     detalles = models.CharField(max_length=50)
 
 # ------------------- MODELOS DE EMPLEADO ------------------- #
