@@ -25,7 +25,7 @@ class Membresia(models.Model):
     tipoMembresia = models.ForeignKey(TipoMembresia, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return self.tipoMembresia.nombreMembresia
+        return self.tipoMembresia
 
 #Modelo Descuento.
 class Descuento(models.Model):
@@ -81,7 +81,6 @@ class Cliente(models.Model):
     genero = models.ForeignKey(TipoGeneroCliente, on_delete=models.SET_NULL, null=True, blank=True)
     tipoSangre = models.ForeignKey(TipoSangreCliente, on_delete=models.SET_NULL, null=True, blank=True)
     creado = models.DateField(default=timezone.now )
-    membresia = models.ForeignKey(Membresia, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.nombres+" "+self.apellidos

@@ -134,3 +134,8 @@ class LogEmpleadoSerializer(serializers.ModelSerializer):
     class Meta:
         model = LogEmpleado
         fields = "__all__"   
+
+class LoginClienteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cliente
+        fields = ('correo','clave')

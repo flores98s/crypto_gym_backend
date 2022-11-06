@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'cryptoGym.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'crypto_gym',
+        'NAME': 'crypto_prod',
         'USER': 'postgres',
         'PASSWORD': 'gFdqNE1G2MDIaWm9ZSWf',
         'HOST': 'containers-us-west-86.railway.app',

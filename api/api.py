@@ -134,3 +134,8 @@ class LogEmpleadoViewSet(viewsets.ModelViewSet):
     queryset = LogEmpleado.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = LogEmpleadoSerializer
+
+class LoginClienteViewSet(viewsets.ModelViewSet):
+    queryset = Cliente.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = LoginClienteSerializer

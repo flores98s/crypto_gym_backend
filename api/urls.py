@@ -49,5 +49,7 @@ router.register('clasegrupal',ClaseGrupalViewSet,'clasesgrupales')
 router.register('salon',SalonViewSet,'salones')
 # url logempleado
 router.register('logempleado',LogEmpleadoViewSet,'logempleados')
+# url loginCliente
+router.register('logincliente',LoginClienteViewSet,'logincliente')
 
 urlpatterns = router.urls
