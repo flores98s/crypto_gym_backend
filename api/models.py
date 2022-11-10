@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
-
+from datetime import date
+from django.core.exceptions import ValidationError
 
 # Modelo TipoMembresia.
 class TipoMembresia(models.Model):
@@ -130,6 +131,17 @@ class Empleado(models.Model):
     def __str__(self):
         return self.nombres+" "+self.apellidos
 
+    def clean(self) -> None:
+        #Dias en 21 años
+        veintiunAñosEnDias = 365.2425 * 21
+        hoy = date.today() 
+        diferenciaDias =  hoy - self.fechaNacimiento
+        if self.fechaNacimiento >= hoy:
+            raise ValidationError("La fecha de nacimiento no puede ser mayor o igual a la fecha de hoy")
+        
+        if diferenciaDias.days < veintiunAñosEnDias:
+            raise ValidationError("El empleado no puede tener menos de 21 años")
+        
 # Modelo TipoGenero.
 class TipoGenero(models.Model):
     nombre = models.CharField(max_length=50)
