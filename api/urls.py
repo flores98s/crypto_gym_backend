@@ -49,7 +49,19 @@ router.register('clasegrupal',ClaseGrupalViewSet,'clasesgrupales')
 router.register('salon',SalonViewSet,'salones')
 # url logempleado
 router.register('logempleado',LogEmpleadoViewSet,'logempleados')
-# url loginCliente
-router.register('logincliente',LoginClienteViewSet,'logincliente')
+# url dieta
+router.register('dieta',DietaViewSet,'dietas')
+# url Asignacion Dieta
+router.register('asignaciondieta',AsignacionDietaViewSet,'asignaciondietas')
+# url comida
+router.register('comida',ComidaViewSet,'comidas')
+# url rutina
+router.register('rutina',RutinaViewSet,'rutinas')
+# url Asignacion rutina
+router.register('asignacionrutina',AsignacionRutinaViewSet,'asignacionrutinas')
+# url ejercicio
+router.register('ejercicio',EjercicioViewSet,'ejercicios')
+# url Musculo
+router.register('musculo',MusculoViewSet,'musculos')
 
 urlpatterns = router.urls

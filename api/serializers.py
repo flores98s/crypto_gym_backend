@@ -135,7 +135,37 @@ class LogEmpleadoSerializer(serializers.ModelSerializer):
         model = LogEmpleado
         fields = "__all__"   
 
-class LoginClienteSerializer(serializers.ModelSerializer):
+class dietaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Cliente
-        fields = ('correo','clave')
+        model = Dieta
+        fields = ('__all__')
+
+class AsignacionDietaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AsignacionDieta
+        fields = ('__all__')
+
+class ComidaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comida
+        fields = ('__all__')
+
+class RutinaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rutina
+        fields = ('__all__')
+
+class AsignacionRutinaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AsignacionRutina
+        fields = ('__all__')
+
+class EjericioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ejercicio
+        fields = ('__all__')
+
+class MusculoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Musculo
+        fields = ('__all__')

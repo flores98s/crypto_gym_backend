@@ -47,12 +47,6 @@ class Cupon(models.Model):
     def __str__(self):
         return self.NombreCodigoCupon
 
-# Modelo TipoSangreCliente.
-class TipoSangreCliente(models.Model):
-    nombreSangre = models.CharField(max_length=50)
-   
-    def __str__(self):
-        return self.nombreSangre
 
 # Modelo TipoGeneroCliente.
 class TipoGeneroCliente(models.Model):
@@ -68,6 +62,13 @@ class TipoDocumentoCliente(models.Model):
     def __str__(self):
         return self.nombreDocumento
 
+# Modelo TipoSangreCliente.
+class TipoSangreCliente(models.Model):
+    nombreSangre = models.CharField(max_length=50)
+   
+    def __str__(self):
+        return self.nombreSangre
+
 # Modelo Cliente.
 class Cliente(models.Model):
     nombres = models.CharField(max_length=50)
@@ -75,12 +76,13 @@ class Cliente(models.Model):
     clave = models.CharField(max_length=50)
     foto = models.CharField(max_length=50)
     fechaNacimiento = models.DateField()
-    documento = models.ForeignKey(TipoDocumentoCliente, on_delete=models.SET_NULL, null=True, blank=True)
+    TipoDocumento = models.ForeignKey(TipoDocumentoCliente, on_delete=models.SET_NULL, null=True, blank=True)
+    numeroDocumento = models.CharField(max_length=50)
     correo = models.EmailField()
     numeroTelefono = models.IntegerField()
     genero = models.ForeignKey(TipoGeneroCliente, on_delete=models.SET_NULL, null=True, blank=True)
     tipoSangre = models.ForeignKey(TipoSangreCliente, on_delete=models.SET_NULL, null=True, blank=True)
-    creado = models.DateField(default=timezone.now )
+    creado = models.DateField(default=timezone.now)
 
     def __str__(self):
         return self.nombres+" "+self.apellidos
@@ -94,6 +96,7 @@ class LogCliente(models.Model):
     
 # Modelo Medidas.
 class Medidas(models.Model):
+    cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=True)
     fechaMedida = models.DateTimeField()
     fotoFrontal = models.CharField(max_length=50)
     fotoLateral = models.CharField(max_length=50)
@@ -108,7 +111,7 @@ class Medidas(models.Model):
     cintura = models.DecimalField(decimal_places=3,max_digits=10)
     pierna = models.DecimalField(decimal_places=3,max_digits=10)
     pantorrilla= models.DecimalField(decimal_places=3,max_digits=10)
-
+   
     class Meta:
         verbose_name_plural = "Medidas"
 
@@ -122,6 +125,7 @@ class Empleado(models.Model):
     telefono = models.IntegerField()
     genero = models.IntegerField()
     documento = models.CharField(max_length=50)
+    numerodocumento = models.CharField(max_length=50, null=True)
 
     def __str__(self):
         return self.nombres+" "+self.apellidos
@@ -199,3 +203,49 @@ class LogEmpleado(models.Model):
     informacion = models.CharField(max_length=100)
     fecha = models.DateTimeField()
     hora = models.TimeField()
+
+""" Modelo de tablas agregadas por el equipo de desarrollo """
+
+class Dieta(models.Model):
+    nombre = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nombre
+
+class AsignacionDieta(models.Model):
+    fecha = models.DateField()
+    hora = models.TimeField()
+
+class Comida(models.Model):
+    nombre = models.CharField(max_length=50)
+    descripcion = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre
+
+class Rutina(models.Model):
+    nombre = models.CharField(max_length=50)
+    tipoRutina = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre
+
+class AsignacionRutina(models.Model):
+    series = models.CharField(max_length=50)
+    repeticiones = models.CharField(max_length=50)
+    descanso = models.CharField(max_length=50)
+    capacidad = models.CharField(max_length=50)
+
+class Ejercicio(models.Model):
+    nombre = models.CharField(max_length=50)
+    imagen = models.ImageField(upload_to='Ejercicios')
+    maquina = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nombre
+
+class Musculo(models.Model):
+    nombre = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nombre

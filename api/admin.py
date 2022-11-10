@@ -27,8 +27,13 @@ admin.site.register(AsignacionClase)
 admin.site.register(ClaseGrupal)
 admin.site.register(Salon)
 admin.site.register(LogEmpleado)
-
-
+admin.site.register(Dieta)
+admin.site.register(AsignacionDieta)
+admin.site.register(Comida)
+admin.site.register(Rutina)
+admin.site.register(AsignacionRutina)
+admin.site.register(Ejercicio)
+admin.site.register(Musculo)
 
 
 

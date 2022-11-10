@@ -135,7 +135,38 @@ class LogEmpleadoViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     serializer_class = LogEmpleadoSerializer
 
-class LoginClienteViewSet(viewsets.ModelViewSet):
-    queryset = Cliente.objects.all()
+
+class DietaViewSet(viewsets.ModelViewSet):
+    queryset = Dieta.objects.all()
     permission_classes = [permissions.AllowAny]
-    serializer_class = LoginClienteSerializer
+    serializer_class = dietaSerializer
+
+class AsignacionDietaViewSet(viewsets.ModelViewSet):
+    queryset = AsignacionDieta.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = AsignacionDietaSerializer
+
+class ComidaViewSet(viewsets.ModelViewSet):
+    queryset = Comida.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = ComidaSerializer
+
+class RutinaViewSet(viewsets.ModelViewSet):
+    queryset = Rutina.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = RutinaSerializer
+
+class AsignacionRutinaViewSet(viewsets.ModelViewSet):
+    queryset = AsignacionRutina.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = AsignacionRutinaSerializer
+
+class EjercicioViewSet(viewsets.ModelViewSet):
+    queryset = Ejercicio.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = EjericioSerializer
+
+class MusculoViewSet(viewsets.ModelViewSet):
+    queryset = Musculo.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = MusculoSerializer
