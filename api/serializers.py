@@ -61,6 +61,14 @@ class TipoSangreClienteSerializer(serializers.ModelSerializer):
         model = TipoSangreCliente
         fields = "__all__"
 
+    def validate_nombreSangre(self, value):
+#         Check if exists
+        if TipoSangreCliente.objects.filter(nombreSangre__iexact=value).exists():
+            raise serializers.ValidationError("Tipo de sangre ya existe")
+        return value
+
+
+
 #Serializar MedidasSerializer
 class MedidasSerializer(serializers.ModelSerializer):
     class Meta:
@@ -149,6 +157,15 @@ class ComidaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comida
         fields = ('__all__')
+
+    def validate_nombre(self,value):
+        if Comida.objects.filter(nombre__iexact=value).exists():
+            raise serializers.ValidationError("Comida ya existe")
+        return value
+
+    # def validate_nombre(self,value):
+    #     if len(value) < 3 :
+    #         raise serializers.ValidationError("El nombre debe tener al menos 3 caracteres")
 
 class RutinaSerializer(serializers.ModelSerializer):
     class Meta:

@@ -1,3 +1,4 @@
+from django.core.validators import MinLengthValidator
 from django.db import models
 from django.utils import timezone
 from datetime import date
@@ -5,9 +6,9 @@ from django.core.exceptions import ValidationError
 
 # Modelo TipoMembresia.
 class TipoMembresia(models.Model):
-    nombreMembresia = models.CharField(max_length=50)
+    nombreMembresia = models.CharField(validators=[MinLengthValidator(3)],  max_length=50)
     precio = models.IntegerField()
-    descripcion = models.CharField(max_length=100)
+    descripcion = models.CharField(validators=[MinLengthValidator(3)], max_length=100)
 
     def __str__(self):
         return self.nombreMembresia
@@ -32,12 +33,12 @@ class Membresia(models.Model):
 class Descuento(models.Model):
     fechaInicial = models.DateTimeField()
     fechaFinal = models.DateTimeField()
-    codigoCupon = models.CharField(max_length=50)
+    codigoCupon = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     cantidadDescuento = models.IntegerField()
 
 #Modelo Cupones.
 class Cupon(models.Model):
-    NombreCodigoCupon = models.CharField(max_length=50)
+    NombreCodigoCupon = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     fechaInicioCupon = models.DateTimeField()
     fechaExpiracionCupon = models.DateTimeField()
     descuentoCupon = models.IntegerField()
@@ -51,34 +52,34 @@ class Cupon(models.Model):
 
 # Modelo TipoGeneroCliente.
 class TipoGeneroCliente(models.Model):
-    nombreGenero = models.CharField(max_length=50)
+    nombreGenero = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
 
     def __str__(self):
         return self.nombreGenero
 
 # Modelo TipoDocumentoCliente.
 class TipoDocumentoCliente(models.Model):
-    nombreDocumento = models.CharField(max_length=50)
+    nombreDocumento = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     
     def __str__(self):
         return self.nombreDocumento
 
 # Modelo TipoSangreCliente.
 class TipoSangreCliente(models.Model):
-    nombreSangre = models.CharField(max_length=50)
+    nombreSangre = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
    
     def __str__(self):
         return self.nombreSangre
 
 # Modelo Cliente.
 class Cliente(models.Model):
-    nombres = models.CharField(max_length=50)
-    apellidos = models.CharField(max_length=50)
-    clave = models.CharField(max_length=50)
-    foto = models.CharField(max_length=50)
+    nombres = models.CharField(validators=[MinLengthValidator(2)], max_length=50)
+    apellidos = models.CharField(validators=[MinLengthValidator(2)], max_length=50)
+    clave = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    foto = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     fechaNacimiento = models.DateField()
     TipoDocumento = models.ForeignKey(TipoDocumentoCliente, on_delete=models.SET_NULL, null=True, blank=True)
-    numeroDocumento = models.CharField(max_length=50)
+    numeroDocumento = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     correo = models.EmailField()
     numeroTelefono = models.IntegerField()
     genero = models.ForeignKey(TipoGeneroCliente, on_delete=models.SET_NULL, null=True, blank=True)
@@ -90,8 +91,8 @@ class Cliente(models.Model):
 
 #Modelo LogCliente.
 class LogCliente(models.Model):
-    accion = models.CharField(max_length=50)
-    informacion = models.CharField(max_length=100)
+    accion = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    informacion = models.CharField(validators=[MinLengthValidator(3)], max_length=100)
     fecha = models.DateTimeField()
     hora = models.TimeField()
     
@@ -99,8 +100,8 @@ class LogCliente(models.Model):
 class Medidas(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=True)
     fechaMedida = models.DateTimeField()
-    fotoFrontal = models.CharField(max_length=50)
-    fotoLateral = models.CharField(max_length=50)
+    fotoFrontal = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    fotoLateral = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     peso = models.IntegerField()
     indiceMasaMuscular = models.DecimalField(decimal_places=3,max_digits=10)
     indiceGrasaMuscular = models.DecimalField(decimal_places=3,max_digits=10)
@@ -118,15 +119,15 @@ class Medidas(models.Model):
 
 # Modelo Empleado.
 class Empleado(models.Model):
-    nombres = models.CharField(max_length=50)
-    apellidos = models.CharField(max_length=50)
-    clave = models.CharField(max_length=50)
+    nombres = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    apellidos = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    clave = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     fechaNacimiento = models.DateField()
     correo = models.EmailField()
     telefono = models.IntegerField()
     genero = models.IntegerField()
-    documento = models.CharField(max_length=50)
-    numerodocumento = models.CharField(max_length=50, null=True)
+    documento = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    numerodocumento = models.CharField(validators=[MinLengthValidator(3)], max_length=50, null=True)
 
     def __str__(self):
         return self.nombres+" "+self.apellidos
@@ -144,7 +145,7 @@ class Empleado(models.Model):
         
 # Modelo TipoGenero.
 class TipoGenero(models.Model):
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
 
     def __str__(self):
         return self.nombre
@@ -159,13 +160,13 @@ class DetallePlanilla(models.Model):
     sueldobruto = models.IntegerField()
     deduccion = models.IntegerField()
     bonificaciones = models.IntegerField()
-    detalles = models.CharField(max_length=50)
+    detalles = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
 
 # ------------------- MODELOS DE EMPLEADO ------------------- #
 
 #Modelo TipoDocumento.
 class DocumentoEmpleado(models.Model):
-    nombreDocumento = models.CharField(max_length=50)
+    nombreDocumento = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
 
     def __str__(self):
         return self.nombreDocumento
@@ -177,7 +178,7 @@ class EmpleadoCargo(models.Model):
 
 #Modelo Cargo
 class Cargo(models.Model):
-    nombreCargo = models.CharField(max_length=50)
+    nombreCargo = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     salario = models.DecimalField(decimal_places=3,max_digits=10)
 
     def __str__(self):
@@ -190,7 +191,7 @@ class AsignacionClase(models.Model):
 
 # Modelo Clase Grupal
 class ClaseGrupal(models.Model):
-    nombreClase = models.CharField(max_length=50)
+    nombreClase = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     cantidadAlumnos = models.IntegerField()
     class Meta :
         verbose_name_plural = "Clases Grupales"
@@ -200,7 +201,7 @@ class ClaseGrupal(models.Model):
 
 # Modelo Salon 
 class Salon(models.Model):
-    nombreSalon = models.CharField(max_length=50)
+    nombreSalon = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     cantidadAlumnos = models.IntegerField()
 
     class Meta:
@@ -211,15 +212,15 @@ class Salon(models.Model):
 
 #Modelo LogEmpleado
 class LogEmpleado(models.Model):
-    accion = models.CharField(max_length=50)
-    informacion = models.CharField(max_length=100)
+    accion = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    informacion = models.CharField(validators=[MinLengthValidator(3)], max_length=100)
     fecha = models.DateTimeField()
     hora = models.TimeField()
 
 """ Modelo de tablas agregadas por el equipo de desarrollo """
 
 class Dieta(models.Model):
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
 
     def __str__(self):
         return self.nombre
@@ -229,35 +230,35 @@ class AsignacionDieta(models.Model):
     hora = models.TimeField()
 
 class Comida(models.Model):
-    nombre = models.CharField(max_length=50)
-    descripcion = models.CharField(max_length=100)
+    nombre = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    descripcion = models.CharField(validators=[MinLengthValidator(3)], max_length=100)
 
     def __str__(self):
         return self.nombre
 
 class Rutina(models.Model):
-    nombre = models.CharField(max_length=50)
-    tipoRutina = models.CharField(max_length=100)
+    nombre = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    tipoRutina = models.CharField(validators=[MinLengthValidator(3)], max_length=100)
 
     def __str__(self):
         return self.nombre
 
 class AsignacionRutina(models.Model):
-    series = models.CharField(max_length=50)
-    repeticiones = models.CharField(max_length=50)
-    descanso = models.CharField(max_length=50)
-    capacidad = models.CharField(max_length=50)
+    series = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    repeticiones = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    descanso = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    capacidad = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
 
 class Ejercicio(models.Model):
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     imagen = models.ImageField(upload_to='Ejercicios')
-    maquina = models.CharField(max_length=50)
+    maquina = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
 
     def __str__(self):
         return self.nombre
 
 class Musculo(models.Model):
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
 
     def __str__(self):
         return self.nombre
