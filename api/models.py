@@ -1,4 +1,4 @@
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator,MinValueValidator
 from django.db import models
 from django.utils import timezone
 from datetime import date
@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 # Modelo TipoMembresia.
 class TipoMembresia(models.Model):
     nombreMembresia = models.CharField(validators=[MinLengthValidator(3)],  max_length=50)
-    precio = models.IntegerField()
+    precio = models.IntegerField(validators=[MinValueValidator(1)])
     descripcion = models.CharField(validators=[MinLengthValidator(3)], max_length=100)
 
     def __str__(self):
@@ -17,7 +17,7 @@ class TipoMembresia(models.Model):
 class PrecioHistoricoMembresia(models.Model):
     fechaInicial = models.DateTimeField()
     fechaFinal = models.DateTimeField()
-    precio = models.IntegerField()
+    precio = models.IntegerField(validators=[MinValueValidator(1)])
     nombreMembresias = models.ForeignKey(TipoMembresia, on_delete=models.SET_NULL, null=True, blank=True)
 
 # Modelo Membresia.
@@ -34,14 +34,14 @@ class Descuento(models.Model):
     fechaInicial = models.DateTimeField()
     fechaFinal = models.DateTimeField()
     codigoCupon = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
-    cantidadDescuento = models.IntegerField()
+    cantidadDescuento = models.IntegerField(validators=[MinValueValidator(1)])
 
 #Modelo Cupones.
 class Cupon(models.Model):
     NombreCodigoCupon = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     fechaInicioCupon = models.DateTimeField()
     fechaExpiracionCupon = models.DateTimeField()
-    descuentoCupon = models.IntegerField()
+    descuentoCupon = models.IntegerField(validators=[MinValueValidator(1)])
 
     class Meta:
         verbose_name_plural = "Cupones"
@@ -81,7 +81,7 @@ class Cliente(models.Model):
     TipoDocumento = models.ForeignKey(TipoDocumentoCliente, on_delete=models.SET_NULL, null=True, blank=True)
     numeroDocumento = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     correo = models.EmailField()
-    numeroTelefono = models.IntegerField()
+    numeroTelefono = models.IntegerField(validators=[MinValueValidator(1)])
     genero = models.ForeignKey(TipoGeneroCliente, on_delete=models.SET_NULL, null=True, blank=True)
     tipoSangre = models.ForeignKey(TipoSangreCliente, on_delete=models.SET_NULL, null=True, blank=True)
     creado = models.DateField(default=timezone.now)
@@ -102,7 +102,7 @@ class Medidas(models.Model):
     fechaMedida = models.DateTimeField()
     fotoFrontal = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     fotoLateral = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
-    peso = models.IntegerField()
+    peso = models.IntegerField(validators=[MinValueValidator(1)])
     indiceMasaMuscular = models.DecimalField(decimal_places=3,max_digits=10)
     indiceGrasaMuscular = models.DecimalField(decimal_places=3,max_digits=10)
     pecho = models.DecimalField(decimal_places=3,max_digits=10)
@@ -124,8 +124,8 @@ class Empleado(models.Model):
     clave = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     fechaNacimiento = models.DateField()
     correo = models.EmailField()
-    telefono = models.IntegerField()
-    genero = models.IntegerField()
+    telefono = models.IntegerField(validators=[MinValueValidator(1)])
+    genero = models.IntegerField(validators=[MinValueValidator(1)])
     documento = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     numerodocumento = models.CharField(validators=[MinLengthValidator(3)], max_length=50, null=True)
 
@@ -157,9 +157,9 @@ class Planilla(models.Model):
 
 # Modelo DetallePlanilla.
 class DetallePlanilla(models.Model):
-    sueldobruto = models.IntegerField()
-    deduccion = models.IntegerField()
-    bonificaciones = models.IntegerField()
+    sueldobruto = models.IntegerField(validators=[MinValueValidator(1)])
+    deduccion = models.IntegerField(validators=[MinValueValidator(1)])
+    bonificaciones = models.IntegerField(validators=[MinValueValidator(1)])
     detalles = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
 
 # ------------------- MODELOS DE EMPLEADO ------------------- #
@@ -192,7 +192,7 @@ class AsignacionClase(models.Model):
 # Modelo Clase Grupal
 class ClaseGrupal(models.Model):
     nombreClase = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
-    cantidadAlumnos = models.IntegerField()
+    cantidadAlumnos = models.IntegerField(validators=[MinValueValidator(1)])
     class Meta :
         verbose_name_plural = "Clases Grupales"
 
@@ -202,7 +202,7 @@ class ClaseGrupal(models.Model):
 # Modelo Salon 
 class Salon(models.Model):
     nombreSalon = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
-    cantidadAlumnos = models.IntegerField()
+    cantidadAlumnos = models.IntegerField(validators=[MinValueValidator(1)])
 
     class Meta:
         verbose_name_plural = "Salones"
