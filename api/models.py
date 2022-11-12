@@ -262,3 +262,92 @@ class Musculo(models.Model):
 
     def __str__(self):
         return self.nombre
+
+#Modelo Factura
+class Factura(models.Model):
+    fecha = models.DateField()
+    hora = models.TimeField()
+    numeroFactura = models.IntegerField(validators=[MinValueValidator(1)])
+
+#Modelo Parametros Factura
+class ParametrosFactura(models.Model):
+    cai = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    fechaEmision = models.DateField()
+    fechaVencimiento = models.DateField()
+    rangoInicial = models.IntegerField(validators=[MinValueValidator(1)])
+    rangoFinal = models.IntegerField(validators=[MinValueValidator(1)])
+    codigoSucursal = models.IntegerField(validators=[MinValueValidator(1)])
+    ultimaFactura = models.IntegerField(validators=[MinValueValidator(1)])
+
+#Modelo Impuesto
+class Impuesto(models.Model):
+    nombre = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    valorImpuesto = models.DecimalField(decimal_places=3,max_digits=10)
+    fechaInicial = models.DateField()
+    fechaFinal = models.DateField()
+
+#Modelo Detalle Factura
+class DetalleFactura(models.Model):
+    cantidad = models.IntegerField(validators=[MinValueValidator(1)])
+    precio = models.DecimalField(decimal_places=3,max_digits=10)
+    subtotal = models.DecimalField(decimal_places=3,max_digits=10)
+    descuento = models.DecimalField(decimal_places=3,max_digits=10)
+    total = models.DecimalField(decimal_places=3,max_digits=10)
+
+#Modelo Devolucion
+class Devolucion(models.Model):
+    fechaDevolucion = models.DateField()
+    cantidad = models.IntegerField(validators=[MinValueValidator(1)])
+    nombreProducto = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    razonDevolucion = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+
+#Modelo Producto
+class Producto(models.Model):
+   codigoProducto = models.IntegerField(validators=[MinValueValidator(1)])
+   nombre = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+   descripcion = models.CharField(validators=[MinLengthValidator(3)], max_length=100)
+   cantidad = models.IntegerField(validators=[MinValueValidator(1)])
+   cantidadMinima = models.IntegerField(validators=[MinValueValidator(1)])
+
+#Modelo Detalles Orden
+class DetallesOrden(models.Model):
+    precio = models.DecimalField(decimal_places=3,max_digits=10)
+    cantidad = models.IntegerField(validators=[MinValueValidator(1)])
+    
+#Modelo Orden
+class Orden(models.Model):
+    fechaOrden = models.DateField()
+    fechaRequerida = models.DateField()
+    fechaEnvio = models.DateField()
+    direccionEnvio = models.CharField(validators=[MinLengthValidator(3)], max_length=100)
+
+#Modelo Categoria
+class Categoria(models.Model):
+    nombre = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+
+#Modelo Precio Historico Producto
+class PrecioHistoricoProducto(models.Model):
+    fechaInicial = models.DateField()
+    fechaFinal = models.DateField()
+    precio = models.DecimalField(decimal_places=3,max_digits=10)
+    
+#Modelo Compra
+class Compra(models.Model):
+    fecha = models.DateField()
+    valor = models.DecimalField(decimal_places=3,max_digits=10)
+    hora = models.TimeField()
+
+#Modelo Administrador
+class Administrador(models.Model):
+    nombre = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    apellido = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    correo = models.EmailField()
+    telefono = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+
+#Modelo Login Administrador
+class LoginAdministrador(models.Model):
+    accion = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    informacion = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    fecha = models.DateField()
+    hora = models.TimeField()
+

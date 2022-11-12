@@ -186,3 +186,69 @@ class MusculoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Musculo
         fields = ('__all__')
+
+class FacturaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Factura
+        fields = ('__all__')
+
+class ParametrosFacturaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ParametrosFactura
+        fields = ('__all__')
+
+class ImpuestoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Impuesto
+        fields = ('__all__')
+
+class DetalleFacturaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DetalleFactura
+        fields = ('__all__')
+
+class DevolucionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Devolucion
+        fields = ('__all__')
+
+class ProductoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Producto
+        fields = ('__all__')
+
+class DetallesOrdenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DetallesOrden
+        fields = ('__all__')
+
+class OrdenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Orden
+        fields = ('__all__')
+
+class CategoriaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Categoria
+        fields = ('__all__')
+
+class PrecioHistoricoProductoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PrecioHistoricoProducto
+        fields = ('__all__')
+
+class CompraSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Compra
+        fields = ('__all__')
+
+class AdministradorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Administrador
+        fields = ('__all__')
+
+class LoginAdministradorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LoginAdministrador
+        fields = ('__all__')
+
