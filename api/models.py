@@ -72,7 +72,7 @@ class TipoSangreCliente(models.Model):
 class Cliente(models.Model):
     nombres = models.CharField(validators=[MinLengthValidator(2)], max_length=50)
     apellidos = models.CharField(validators=[MinLengthValidator(2)], max_length=50)
-    clave = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    clave = models.CharField(validators=[MinLengthValidator(3)], max_length=100)
     foto = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     fechaNacimiento = models.DateField()
     TipoDocumento = models.ForeignKey(TipoDocumentoCliente, on_delete=models.SET_NULL, null=True, blank=True)
