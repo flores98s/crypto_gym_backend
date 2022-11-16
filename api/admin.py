@@ -34,6 +34,21 @@ admin.site.register(Rutina)
 admin.site.register(AsignacionRutina)
 admin.site.register(Ejercicio)
 admin.site.register(Musculo)
+#-------------------------------------------------------------------------------------------------------------------------------
+admin.site.register(Factura)
+admin.site.register(ParametrosFactura)
+admin.site.register(Impuesto)
+admin.site.register(DetalleFactura)
+admin.site.register(Devolucion)
+admin.site.register(Producto)
+admin.site.register(DetallesOrden)
+admin.site.register(Orden)
+admin.site.register(Categoria)
+admin.site.register(PrecioHistoricoProducto)
+admin.site.register(Compra)
+admin.site.register(Administrador)
+admin.site.register(LoginAdministrador)
+
 
 
 

@@ -63,5 +63,32 @@ router.register('asignacionrutina',AsignacionRutinaViewSet,'asignacionrutinas')
 router.register('ejercicio',EjercicioViewSet,'ejercicios')
 # url Musculo
 router.register('musculo',MusculoViewSet,'musculos')
+# ------------------------------------------------------------------------------------------------------------------
+# url Factura
+router.register('factura',FacturaViewSet,'facturas')
+# url Parametros Factura
+router.register('parametrosfactura',ParametrosFacturaViewSet,'parametrosfacturas')
+# url Impuesto
+router.register('impuesto',ImpuestoViewSet,'impuestos')
+# url Detalle Factura
+router.register('detallefactura',DetalleFacturaViewSet,'detallefacturas')
+# url Devolucion
+router.register('devolucion',DevolucionViewSet,'devoluciones')
+# url Producto
+router.register('producto',ProductoViewSet,'productos')
+# url Detalles Orden
+router.register('detallesorden',DetallesOrdenViewSet,'detallesordenes')
+# url Orden
+router.register('orden',OrdenViewSet,'ordenes')
+# url Categotia
+router.register('categoria',CategoriaViewSet,'categorias')
+# url Precio Historico Producto
+router.register('preciohistoricoproducto',PrecioHistoricoProductoViewSet,'preciohistoricoproductos')
+# url Compra
+router.register('compra',CompraViewSet,'compras')
+# url Administrador
+router.register('administrador',AdministradorViewSet,'administradores')
+# url Login Administrador
+router.register('loginadministrador',LoginAdministradorViewSet,'loginadministradores')
 
 urlpatterns = router.urls
