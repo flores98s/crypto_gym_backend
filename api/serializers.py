@@ -76,8 +76,6 @@ class TipoSangreClienteSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Tipo de sangre ya existe")
         return value
 
-
-
 #Serializar MedidasSerializer
 class MedidasSerializer(serializers.ModelSerializer):
     class Meta:
@@ -261,3 +259,8 @@ class LoginAdministradorSerializer(serializers.ModelSerializer):
     class Meta:
         model = LoginAdministrador
         fields = ('__all__')
+
+class LoginClienteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cliente
+        fields = ['correo','clave',]

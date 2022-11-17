@@ -236,3 +236,9 @@ class LoginAdministradorViewSet(viewsets.ModelViewSet):
     queryset = LoginAdministrador.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = LoginAdministradorSerializer
+
+class LoginClienteViewSet(viewsets.ModelViewSet):
+    queryset = Cliente.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = LoginClienteSerializer
+    

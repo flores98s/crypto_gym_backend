@@ -90,5 +90,7 @@ router.register('compra',CompraViewSet,'compras')
 router.register('administrador',AdministradorViewSet,'administradores')
 # url Login Administrador
 router.register('loginadministrador',LoginAdministradorViewSet,'loginadministradores')
+# url Login Cliente
+router.register('login',LoginClienteViewSet,'loginclientes')
 
 urlpatterns = router.urls
