@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 from datetime import date
 from django.core.exceptions import ValidationError
+from .validators import validate_fecha
 
 # Modelo TipoMembresia.
 class TipoMembresia(models.Model):
@@ -74,7 +75,7 @@ class Cliente(models.Model):
     apellidos = models.CharField(validators=[MinLengthValidator(2)], max_length=50)
     clave = models.CharField(validators=[MinLengthValidator(3)], max_length=100)
     foto = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
-    fechaNacimiento = models.DateField()
+    fechaNacimiento = models.DateField(validators=[validate_fecha])
     TipoDocumento = models.ForeignKey(TipoDocumentoCliente, on_delete=models.SET_NULL, null=True, blank=True)
     numeroDocumento = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
     correo = models.EmailField()
@@ -82,9 +83,22 @@ class Cliente(models.Model):
     genero = models.ForeignKey(TipoGeneroCliente, on_delete=models.SET_NULL, null=True, blank=True)
     tipoSangre = models.ForeignKey(TipoSangreCliente, on_delete=models.SET_NULL, null=True, blank=True)
     creado = models.DateField(default=timezone.now)
+    bloqueado = models.BooleanField(default=False)
+    activo = models.BooleanField(default=True)
 
     def __str__(self):
         return self.nombres+" "+self.apellidos
+
+    def clean(self) -> None:
+        #Dias en 21 años
+        veintiunAñosEnDias = 365.2425 * 21
+        hoy = date.today() 
+        diferenciaDias =  hoy - self.fechaNacimiento
+        if self.fechaNacimiento >= hoy:
+            raise ValidationError("La fecha de nacimiento no puede ser mayor o igual a la fecha de hoy")
+        
+        if diferenciaDias.days < veintiunAñosEnDias:
+            raise ValidationError("El empleado no puede tener menos de 21 años")
 
 class Descuento(models.Model):
     membresia = models.ForeignKey(Membresia, on_delete=models.SET_NULL, null=True, blank=True)
@@ -121,6 +135,7 @@ class Medidas(models.Model):
 
     def __str__(self):
         return self.cliente
+
 
 #Modelo LogCliente.
 class LogCliente(models.Model):
