@@ -41,8 +41,6 @@ class ClienteSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         cliente = Cliente(**validated_data)
         cliente.clave = make_password(cliente.clave)
-        print(cliente.clave)
-        print(len(cliente.clave))
         cliente.save()
         return cliente
 
@@ -87,6 +85,12 @@ class EmpleadoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Empleado
         fields = "__all__"
+
+    def create(self, validated_data):
+        empleado = Empleado(**validated_data)
+        empleado.clave = make_password(empleado.clave)
+        empleado.save()
+        return empleado
 
 #Serializar TipoGeneroSerializer
 class TipoGeneroSerializer(serializers.ModelSerializer):
