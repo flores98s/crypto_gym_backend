@@ -1,5 +1,7 @@
 from rest_framework import routers
 from .api import *
+from django.urls import path, include
+from .views import *
 
 
 router = routers.DefaultRouter()
@@ -94,3 +96,9 @@ router.register('loginadministrador',LoginAdministradorViewSet,'loginadministrad
 router.register('login',LoginClienteViewSet,'loginclientes')
 
 urlpatterns = router.urls
+
+urlpatterns += [
+    path('empleado/<int:id>', get_empleado, name='get_empleado'),
+    path('cliente/<int:id>', get_cliente, name='get_cliente'),
+    #path('loginEmpleado/', loginEmpleado, name='loginEmpleado'),#
+]
