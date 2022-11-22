@@ -8,11 +8,19 @@ from django.views.decorators.csrf import csrf_exempt
 
 def get_empleado(request, id):
     empleados = list(Empleado.objects.filter(id=id).values())
-    return JsonResponse(empleados, safe=False)
+    if empleados:
+        return JsonResponse({'data':empleados}, safe=False)
+    else:
+        return JsonResponse({'data':'No se encontró el id'}, safe=False)
+    return JsonResponse({'data':empleados}, safe=False)
 
 def get_cliente(request, id):
     clientes = list(Cliente.objects.filter(id=id).values())
-    return JsonResponse(clientes, safe=False)
+    if clientes:
+        return JsonResponse({'data':clientes}, safe=False)
+    else:
+        return JsonResponse({'data':'No se encontró el id'}, safe=False)
+    return JsonResponse({'data':clientes}, safe=False)
     
 
 @csrf_exempt
