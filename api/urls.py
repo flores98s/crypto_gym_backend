@@ -98,7 +98,9 @@ router.register('login',LoginClienteViewSet,'loginclientes')
 urlpatterns = router.urls
 
 urlpatterns += [
-    path('empleado/<int:id>', get_empleado, name='get_empleado'),
-    path('cliente/<int:id>', get_cliente, name='get_cliente'),
+    path('empleado/<int:id>', empleado, name='empleado'),
+    path('cliente/<int:id>', cliente, name='get_cliente'),
+    path('membresia/<int:id>', membresia, name='get_membresia'),
+    path('rutina/<int:id>', rutina, name='get_rutina'),
     #path('loginEmpleado/', loginEmpleado, name='loginEmpleado'),#
 ]
