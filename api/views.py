@@ -67,8 +67,8 @@ def cliente(request, id):
         cliente = Cliente.objects.get(id=id)
         if cliente:
             data = json.loads(request.body)
-            cliente.nombre = data['nombre']
-            cliente.apellido = data['apellido']
+            cliente.nombres = data['nombre']
+            cliente.apellidos = data['apellido']
             cliente.save()
             return JsonResponse({'data': 'Cliente actualizado'}, safe=False)
         else:
@@ -136,3 +136,29 @@ def loginEmpleado(request):
         else:
             return JsonResponse({'auth': False}, safe=False)
 
+@csrf_exempt
+def medidas(request, id):
+    if request.method == 'GET':
+        medidas = list(Medidas.objects.filter(id=id).values())
+        if medidas:
+            return JsonResponse({'data': medidas}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+        return JsonResponse({'data': medidas}, safe=False)
+    elif request.method == 'POST':
+        data = json.loads(request.body)
+        medidas = Medidas.objects.create(**data)
+        return JsonResponse({'data': 'Medidas creadas'}, safe=False)
+    elif request.method == 'PUT':
+        data = json.loads(request.body)
+        medidas = Medidas.objects.filter(id=id).update(**data)
+        return JsonResponse({'data': 'Medidas actualizadas'}, safe=False)
+    elif request.method == 'DELETE':
+        medidas = Medidas.objects.filter(id=id)
+        if medidas:
+            medidas.delete()
+            return JsonResponse({'data': 'Medidas eliminadas'}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+        return JsonResponse({'data': 'Medidas eliminadas'}, safe=False)
+    return JsonResponse({'data': 'No se encontró el id'}, safe=False)

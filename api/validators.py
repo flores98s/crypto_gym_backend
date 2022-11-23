@@ -17,7 +17,7 @@ def validate_peso(value):
 
 def validate_nombre(value):
     '''validar que no tenga símbolos'''
-    if not re.match("^[a-zA-Z]*$", value):
+    if not re.match("^[a-zA-Z ]*$", value):
         raise ValidationError(
             (f'El nombre no puede tener símbolos o números'),
         )
