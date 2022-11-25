@@ -162,3 +162,29 @@ def medidas(request, id):
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
         return JsonResponse({'data': 'Medidas eliminadas'}, safe=False)
     return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+
+@csrf_exempt
+def tiposMembresias(request, id):
+    if request.method == 'GET':
+        tiposMembresias = list(TipoMembresia.objects.filter(id=id).values())
+        if tiposMembresias:
+            return JsonResponse({'data': tiposMembresias}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    elif request.method == 'POST':
+        data = json.loads(request.body)
+        tiposMembresias = TipoMembresia.objects.create(**data)
+        return JsonResponse({'data': 'Tipo de membresia creada'}, safe=False)
+    elif request.method == 'PUT':
+        data = json.loads(request.body)
+        tiposMembresias = TipoMembresia.objects.filter(id=id).update(**data)
+        return JsonResponse({'data': 'Tipo de membresia actualizada'}, safe=False)
+    elif request.method == 'DELETE':
+        tiposMembresias = TipoMembresia.objects.filter(id=id)
+        if tiposMembresias:
+            tiposMembresias.delete()
+            return JsonResponse({'data': 'Tipo de membresia eliminada'}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+        return JsonResponse({'data': 'Tipo de membresia eliminada'}, safe=False)
+    return JsonResponse({'data': 'No se encontró el id'}, safe=False)
