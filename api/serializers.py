@@ -34,6 +34,14 @@ class CuponSerializer(serializers.ModelSerializer):
 
 #Serializar ClienteSerializer
 class ClienteSerializer(serializers.ModelSerializer):
+    TipoDocumento = serializers.StringRelatedField(read_only=True)
+    genero = serializers.StringRelatedField(read_only=True)
+    tipoSangre = serializers.StringRelatedField(read_only=True)
+    membresia = serializers.StringRelatedField(read_only=True)
+    descuento = serializers.StringRelatedField(read_only=True)
+    rutina = serializers.StringRelatedField(read_only=True)
+    dieta = serializers.StringRelatedField(read_only=True)
+    medidas = serializers.StringRelatedField(read_only=True)
     class Meta:
         model = Cliente
         fields = "__all__"
@@ -82,6 +90,10 @@ class MedidasSerializer(serializers.ModelSerializer):
 
 #Serializar EmpleadoSerializer
 class EmpleadoSerializer(serializers.ModelSerializer):
+    genero = serializers.StringRelatedField(read_only=True)
+    documento = serializers.StringRelatedField(read_only=True)
+    empleadoCargo = serializers.StringRelatedField(read_only=True)
+    planilla = serializers.StringRelatedField(read_only=True)
     class Meta:
         model = Empleado
         fields = "__all__"
