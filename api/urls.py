@@ -104,5 +104,7 @@ urlpatterns += [
     path('rutina/<int:id>', rutina, name='get_rutina'),
     path('medida/<int:id>', medidas, name='get_medida'),
     path('tiposmembresias/<int:id>', tiposMembresias, name='get_tiposMembresias'),
+    path('cargo/<int:id>', cargo, name='get_cargo'),
+    
     #path('loginEmpleado/', loginEmpleado, name='loginEmpleado'),#
 ]

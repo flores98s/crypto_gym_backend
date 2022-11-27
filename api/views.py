@@ -35,7 +35,7 @@ def empleado(request, id):
             return JsonResponse({'data': 'Empleado eliminado'}, safe=False)
         else:
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
-        return JsonResponse({'data': 'Empleado eliminado'}, safe=False)
+    return JsonResponse({'data': 'Empleado eliminado'}, safe=False)
 
 
 
@@ -188,3 +188,29 @@ def tiposMembresias(request, id):
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
         return JsonResponse({'data': 'Tipo de membresia eliminada'}, safe=False)
     return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+
+
+@csrf_exempt
+def cargo(request, id):
+    if request.method == 'GET':
+        cargos = list(Cargo.objects.filter(id=id).values())
+        if cargos:
+            return JsonResponse({'data': cargos}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    elif request.method == 'POST':
+        data = json.loads(request.body)
+        cargos = Cargo.objects.create(**data)
+        return JsonResponse({'data': 'Cargo creado'}, safe=False)
+    elif request.method == 'PUT':
+        data = json.loads(request.body)
+        cargos = Cargo.objects.filter(id=id).update(**data)
+        return JsonResponse({'data': 'Cargo actualizado'}, safe=False)
+    elif request.method == 'DELETE':
+        cargos = Cargo.objects.filter(id=id)
+        if cargos:
+            cargos.delete()
+            return JsonResponse({'data': 'Cargo eliminado'}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    return JsonResponse({'data': 'Cargo eliminado'}, safe=False)
