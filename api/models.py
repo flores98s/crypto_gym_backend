@@ -242,6 +242,11 @@ class Empleado(models.Model):
     numerodocumento = models.CharField(validators=[MinLengthValidator(3)], max_length=50, null=True)
     empleadoCargo = models.ForeignKey(EmpleadoCargo, on_delete=models.SET_NULL, null=True, blank=True)
     planilla = models.ForeignKey(Planilla, on_delete=models.SET_NULL, null=True, blank=True)
+    activo = models.BooleanField(default=True)
+    bloqueado = models.BooleanField(default=False)
+    creado = models.DateField(default=timezone.now)
+    intentos = models.IntegerField( default=0)
+    rol = models.IntegerField(default=0)
 
     def __str__(self):
         return self.nombres+" "+self.apellidos
