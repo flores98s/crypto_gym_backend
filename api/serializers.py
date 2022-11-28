@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import *
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password,check_password
 
 #Serializar MembresiaSerializer
 class MembresiaSerializer(serializers.ModelSerializer):

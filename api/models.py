@@ -178,6 +178,7 @@ class Cliente(models.Model):
     rutina = models.ForeignKey(Rutina, on_delete=models.SET_NULL, null=True, blank=True)
     dieta = models.ForeignKey(Dieta, on_delete=models.SET_NULL, null=True, blank=True)
     medidas = models.ForeignKey(Medidas, on_delete=models.SET_NULL, null=True, blank=True)
+    intentos = models.IntegerField( default=0)
 
     def __str__(self):
         return self.nombres+" "+self.apellidos

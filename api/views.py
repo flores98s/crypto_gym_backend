@@ -1,8 +1,11 @@
+from django.forms import model_to_dict
 from django.shortcuts import render
 from .models import *
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.hashers import make_password,check_password
+
 
 
 # Create your views here.
@@ -239,3 +242,33 @@ def asignacionRutina(request, id):
         else:
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
     return JsonResponse({'data': 'Asignacion de rutina eliminada'}, safe=False)
+
+@csrf_exempt
+def loginCliente(request):
+    data = json.loads(request.body)
+    correo = data['correo']
+    clave = data['clave']
+
+    if request.method == 'POST':
+        cliente = Cliente.objects.filter(correo=correo).first()
+        print(cliente)
+        # check if cliente is blocked
+        if cliente:
+            if cliente.bloqueado == 'bloqueado':
+                return JsonResponse({'auth': False, 'error': 'Usuario bloqueado'}, safe=False)
+            else:
+                if check_password(clave,cliente.clave):
+                    data = model_to_dict(cliente)
+
+                    return JsonResponse([{'auth': True, 'data': data }], safe=False)
+                else:
+                    if cliente.intentos <3:
+                        cliente.intentos = cliente.intentos + 1
+                        cliente.save()
+                        return JsonResponse({'auth': False, 'error': 'Usuario o Contraseña incorrecta'}, safe=False)
+                    elif cliente.intentos == 3:
+                        cliente.bloqueado = True
+                        cliente.save()
+                        return JsonResponse({'auth': False, 'error': 'Usuario bloqueado'}, safe=False)
+        else:
+            return JsonResponse({'auth': False, 'data': 'Usuario no encontrado'}, safe=False)
