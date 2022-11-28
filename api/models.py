@@ -96,10 +96,10 @@ class MusculoEjercicio(models.Model):
 
 class AsignacionRutina(models.Model):
     MusculoEjercicio = models.ForeignKey(MusculoEjercicio, on_delete=models.SET_NULL, null=True, blank=True)
-    series = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
-    repeticiones = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
-    descanso = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
-    capacidad = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
+    series = models.IntegerField(validators=[MinValueValidator(0)])
+    repeticiones = models.IntegerField(validators=[MinValueValidator(0)])
+    descanso = models.IntegerField(validators=[MinValueValidator(0)])
+    capacidad = models.IntegerField(validators=[MinValueValidator(0)])
 
     def __str__(self):
         return self.MusculoEjercicio

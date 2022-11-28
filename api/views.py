@@ -259,7 +259,6 @@ def loginCliente(request):
             else:
                 if check_password(clave,cliente.clave):
                     data = model_to_dict(cliente)
-
                     return JsonResponse([{'auth': True, 'data': data }], safe=False)
                 else:
                     if cliente.intentos <3:
