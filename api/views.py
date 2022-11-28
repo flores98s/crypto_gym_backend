@@ -124,21 +124,6 @@ def membresia(request):
         return JsonResponse({'data': 'Membresia eliminada'}, safe=False)
     return JsonResponse({'data': 'No se encontró el id'}, safe=False)
 
-
-
-@csrf_exempt
-def loginEmpleado(request):
-    data = json.loads(request.body)
-    correo = data['correo']
-    clave = data['clave']
-
-    if request.method == 'POST':
-        empleado = Empleado.objects.filter(correo=correo, clave=clave).first()
-        if empleado:
-            return JsonResponse({'auth': True, 'data': empleado}, safe=False)
-        else:
-            return JsonResponse({'auth': False}, safe=False)
-
 @csrf_exempt
 def medidas(request, id):
     if request.method == 'GET':
@@ -268,6 +253,60 @@ def loginCliente(request):
                     elif cliente.intentos == 3:
                         cliente.bloqueado = True
                         cliente.save()
-                        return JsonResponse({'auth': False, 'error': 'Usuario bloqueado'}, safe=False)
+        return JsonResponse({'auth': False, 'error': 'Usuario bloqueado'}, safe=False)
+    else:
+        return JsonResponse({'auth': False, 'data': 'Usuario no encontrado'}, safe=False)
+
+@csrf_exempt
+def ejercicio(request, id):
+    if request.method == 'GET':
+        ejercicios = list(Ejercicio.objects.filter(id=id).values())
+        if ejercicios:
+            return JsonResponse({'data': ejercicios}, safe=False)
         else:
-            return JsonResponse({'auth': False, 'data': 'Usuario no encontrado'}, safe=False)
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    elif request.method == 'POST':
+        data = json.loads(request.body)
+        ejercicios = Ejercicio.objects.create(**data)
+        return JsonResponse({'data': 'Ejercicio creado'}, safe=False)
+    elif request.method == 'PUT':
+        data = json.loads(request.body)
+        ejercicios = Ejercicio.objects.filter(id=id).update(**data)
+        return JsonResponse({'data': 'Ejercicio actualizado'}, safe=False)
+    elif request.method == 'DELETE':
+        ejercicios = Ejercicio.objects.filter(id=id)
+        if ejercicios:
+            ejercicios.delete()
+            return JsonResponse({'data': 'Ejercicio eliminado'}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    return JsonResponse({'data': 'Ejercicio eliminado'}, safe=False)
+
+@csrf_exempt
+def loginEmpleado(request):
+    data = json.loads(request.body)
+    correo = data['correo']
+    clave = data['clave']
+
+    if request.method == 'POST':
+        empleado = Empleado.objects.filter(correo=correo).first()
+        print(empleado)
+        # check if empleado is blocked
+        if empleado:
+            if empleado.bloqueado == 'bloqueado':
+                return JsonResponse({'auth': False, 'error': 'Usuario bloqueado'}, safe=False)
+            else:
+                if check_password(clave,empleado.clave):
+                    data = model_to_dict(empleado)
+                    return JsonResponse([{'auth': True, 'data': data }], safe=False)
+                else:
+                    if empleado.intentos <3:
+                        empleado.intentos = empleado.intentos + 1
+                        empleado.save()
+                        return JsonResponse({'auth': False, 'error': 'Usuario o Contraseña incorrecta'}, safe=False)
+                    elif empleado.intentos == 3:
+                        empleado.bloqueado = True
+                        empleado.save()
+        return JsonResponse({'auth': False, 'error': 'Usuario bloqueado'}, safe=False)
+    else:
+        return JsonResponse({'auth': False, 'data': 'Usuario no encontrado'}, safe=False)
