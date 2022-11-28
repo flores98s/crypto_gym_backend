@@ -214,3 +214,28 @@ def cargo(request, id):
         else:
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
     return JsonResponse({'data': 'Cargo eliminado'}, safe=False)
+
+@csrf_exempt
+def asignacionRutina(request, id):
+    if request.method == 'GET':
+        asignacionRutinas = list(AsignacionRutina.objects.filter(id=id).values())
+        if asignacionRutinas:
+            return JsonResponse({'data': asignacionRutinas}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    elif request.method == 'POST':
+        data = json.loads(request.body)
+        asignacionRutinas = AsignacionRutina.objects.create(**data)
+        return JsonResponse({'data': 'Asignacion de rutina creada'}, safe=False)
+    elif request.method == 'PUT':
+        data = json.loads(request.body)
+        asignacionRutinas = AsignacionRutina.objects.filter(id=id).update(**data)
+        return JsonResponse({'data': 'Asignacion de rutina actualizada'}, safe=False)
+    elif request.method == 'DELETE':
+        asignacionRutinas = AsignacionRutina.objects.filter(id=id)
+        if asignacionRutinas:
+            asignacionRutinas.delete()
+            return JsonResponse({'data': 'Asignacion de rutina eliminada'}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    return JsonResponse({'data': 'Asignacion de rutina eliminada'}, safe=False)

@@ -105,6 +105,6 @@ urlpatterns += [
     path('medida/<int:id>', medidas, name='get_medida'),
     path('tiposmembresias/<int:id>', tiposMembresias, name='get_tiposMembresias'),
     path('cargo/<int:id>', cargo, name='get_cargo'),
-    
+    path('asignacionrutina/<int:id>', asignacionRutina, name='get_asignacionrutina'),
     #path('loginEmpleado/', loginEmpleado, name='loginEmpleado'),#
 ]
