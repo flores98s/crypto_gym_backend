@@ -140,8 +140,8 @@ class Dieta(models.Model):
 # Modelo Medidas.
 class Medidas(models.Model):
     fechaMedida = models.DateTimeField()
-    fotoFrontal = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
-    fotoLateral = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
+    fotoFrontal = models.ImageField(upload_to='crypto_gym_backend/media/Medidas', null=True, blank=True)
+    fotoLateral = models.ImageField(upload_to='crypto_gym_backend/media/Medidas', null=True, blank=True)
     peso = models.IntegerField(validators=[MinValueValidator(1)])
     indiceMasaMuscular = models.DecimalField(decimal_places=3,max_digits=10)
     indiceGrasaMuscular = models.DecimalField(decimal_places=3,max_digits=10)
@@ -157,12 +157,15 @@ class Medidas(models.Model):
     class Meta:
         verbose_name_plural = "Medidas"
 
+    def __str__(self):
+        return str(self.fechaMedida)
+
 # Modelo Cliente.
 class Cliente(models.Model):
     nombres = models.CharField(validators=[MinLengthValidator(2),validate_nombre], max_length=50)
     apellidos = models.CharField(validators=[MinLengthValidator(2),validate_nombre], max_length=50)
     clave = models.CharField(validators=[MinLengthValidator(3)], max_length=100)
-    foto = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
+    foto = models.ImageField(upload_to='crypto_gym_backend/media/Clientes',default='crypto_gym_backend/media/Clientes/default.png')
     fechaNacimiento = models.DateField(validators=[validate_fecha, validate_mayordedieciochoaños])
     TipoDocumento = models.ForeignKey(TipoDocumentoCliente, on_delete=models.SET_NULL, null=True, blank=True)
     numeroDocumento = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
