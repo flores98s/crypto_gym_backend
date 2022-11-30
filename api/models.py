@@ -117,7 +117,7 @@ class Rutina(models.Model):
 
 class Comida(models.Model):
     nombre = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
-    descripcion = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=100)
+    descripcion = models.CharField(validators=[MinLengthValidator(3)], max_length=100)
 
     def __str__(self):
         return self.nombre
@@ -135,7 +135,7 @@ class Dieta(models.Model):
     nombre = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
 
     def __str__(self):
-        return self.asignacionDieta
+        return self.nombre
 
 # Modelo Medidas.
 class Medidas(models.Model):
@@ -335,13 +335,13 @@ class DetalleFactura(models.Model):
 
 #Modelo Parametros Factura
 class ParametrosFactura(models.Model):
-    cai = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
-    fechaEmision = models.DateField(validators=[validate_fecha])
-    fechaVencimiento = models.DateField(validators=[validate_fecha])
-    rangoInicial = models.IntegerField(validators=[MinValueValidator(1)])
-    rangoFinal = models.IntegerField(validators=[MinValueValidator(1)])
-    codigoSucursal = models.IntegerField(validators=[MinValueValidator(1)])
-    ultimaFactura = models.IntegerField(validators=[MinValueValidator(1)])
+    cai = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    fechaEmision = models.DateField()
+    fechaVencimiento = models.DateField()
+    rangoInicial = models.IntegerField(validators=[MinValueValidator(0)])
+    rangoFinal = models.IntegerField(validators=[MinValueValidator(0)])
+    codigoSucursal = models.IntegerField()
+    ultimaFactura = models.IntegerField()
 
     def __str__(self):
         return self.cai

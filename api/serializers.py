@@ -172,6 +172,7 @@ class dietaSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 class AsignacionDietaSerializer(serializers.ModelSerializer):
+    comida = serializers.StringRelatedField(read_only=True)
     class Meta:
         model = AsignacionDieta
         fields = ('__all__')
