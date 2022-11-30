@@ -4,8 +4,7 @@ from .models import *
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.hashers import make_password,check_password
-
+from django.contrib.auth.hashers import make_password, check_password
 
 
 # Create your views here.
@@ -39,7 +38,6 @@ def empleado(request, id):
         else:
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
     return JsonResponse({'data': 'Empleado eliminado'}, safe=False)
-
 
 
 @csrf_exempt
@@ -79,7 +77,6 @@ def cliente(request, id):
     return JsonResponse({'data': 'No se encontró el id'}, safe=False)
 
 
-
 def rutina(request):
     if request.method == 'GET':
         rutinas = list(Rutina.objects.all().values())
@@ -102,6 +99,7 @@ def rutina(request):
         return JsonResponse({'data': 'Rutina eliminada'}, safe=False)
     return JsonResponse({'data': 'No se encontró el id'}, safe=False)
 
+
 def membresia(request):
     if request.method == 'GET':
         membresias = list(Membresia.objects.all().values())
@@ -123,6 +121,7 @@ def membresia(request):
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
         return JsonResponse({'data': 'Membresia eliminada'}, safe=False)
     return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+
 
 @csrf_exempt
 def medidas(request, id):
@@ -150,6 +149,7 @@ def medidas(request, id):
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
         return JsonResponse({'data': 'Medidas eliminadas'}, safe=False)
     return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+
 
 @csrf_exempt
 def tiposMembresias(request, id):
@@ -203,6 +203,7 @@ def cargo(request, id):
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
     return JsonResponse({'data': 'Cargo eliminado'}, safe=False)
 
+
 @csrf_exempt
 def asignacionRutina(request, id):
     if request.method == 'GET':
@@ -228,6 +229,7 @@ def asignacionRutina(request, id):
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
     return JsonResponse({'data': 'Asignacion de rutina eliminada'}, safe=False)
 
+
 @csrf_exempt
 def loginCliente(request):
     data = json.loads(request.body)
@@ -242,11 +244,11 @@ def loginCliente(request):
             if cliente.bloqueado == 'bloqueado':
                 return JsonResponse({'auth': False, 'error': 'Usuario bloqueado'}, safe=False)
             else:
-                if check_password(clave,cliente.clave):
+                if check_password(clave, cliente.clave):
                     data = model_to_dict(cliente)
-                    return JsonResponse([{'auth': True, 'data': data }], safe=False)
+                    return JsonResponse([{'auth': True, 'data': data}], safe=False)
                 else:
-                    if cliente.intentos <3:
+                    if cliente.intentos < 3:
                         cliente.intentos = cliente.intentos + 1
                         cliente.save()
                         return JsonResponse({'auth': False, 'error': 'Usuario o Contraseña incorrecta'}, safe=False)
@@ -256,6 +258,7 @@ def loginCliente(request):
         return JsonResponse({'auth': False, 'error': 'Usuario bloqueado'}, safe=False)
     else:
         return JsonResponse({'auth': False, 'data': 'Usuario no encontrado'}, safe=False)
+
 
 @csrf_exempt
 def ejercicio(request, id):
@@ -282,6 +285,7 @@ def ejercicio(request, id):
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
     return JsonResponse({'data': 'Ejercicio eliminado'}, safe=False)
 
+
 @csrf_exempt
 def loginEmpleado(request):
     data = json.loads(request.body)
@@ -296,11 +300,11 @@ def loginEmpleado(request):
             if empleado.bloqueado == 'bloqueado':
                 return JsonResponse({'auth': False, 'error': 'Usuario bloqueado'}, safe=False)
             else:
-                if check_password(clave,empleado.clave):
+                if check_password(clave, empleado.clave):
                     data = model_to_dict(empleado)
-                    return JsonResponse([{'auth': True, 'data': data }], safe=False)
+                    return JsonResponse([{'auth': True, 'data': data}], safe=False)
                 else:
-                    if empleado.intentos <3:
+                    if empleado.intentos < 3:
                         empleado.intentos = empleado.intentos + 1
                         empleado.save()
                         return JsonResponse({'auth': False, 'error': 'Usuario o Contraseña incorrecta'}, safe=False)
@@ -310,3 +314,28 @@ def loginEmpleado(request):
         return JsonResponse({'auth': False, 'error': 'Usuario bloqueado'}, safe=False)
     else:
         return JsonResponse({'auth': False, 'data': 'Usuario no encontrado'}, safe=False)
+
+
+@csrf_exempt
+def dieta(request, id):
+    if request.method == 'GET':
+        dietas = list(Dieta.objects.filter(id=id).values())
+        if dietas:
+            return JsonResponse({'data': dietas}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    elif request.method == 'POST':
+        data = json.loads(request.body)
+        dietas = Dieta.objects.create(**data)
+        return JsonResponse({'data': 'Dieta creada'}, safe=False)
+    elif request.method == 'PUT':
+        data = json.loads(request.body)
+        dietas = Dieta.objects.filter(id=id).update(**data)
+        return JsonResponse({'data': 'Dieta actualizada'}, safe=False)
+    elif request.method == 'DELETE':
+        dietas = Dieta.objects.filter(id=id)
+        if dietas:
+            dietas.delete()
+            return JsonResponse({'data': 'Dieta eliminada'}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)

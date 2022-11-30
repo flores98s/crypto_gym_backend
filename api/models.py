@@ -128,7 +128,7 @@ class AsignacionDieta(models.Model):
     hora = models.TimeField()
 
     def __str__(self):
-        return self.comida
+        return self.comida.nombre.__str__()
 
 class Dieta(models.Model):
     asignacionDieta = models.ForeignKey(AsignacionDieta, on_delete=models.SET_NULL, null=True, blank=True)
