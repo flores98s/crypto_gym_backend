@@ -110,4 +110,14 @@ urlpatterns += [
     path('ejercicio/<int:id>', ejercicio, name='get_ejercicio'),
     path('dieta/<int:id>', dieta, name='get_dieta'),
     # path('loginEmpleado/', loginEmpleado, name='loginEmpleado'),#
+    path('parametrosfactura/<int:id>', parametrosFactura, name='get_parametrosfactura'),
+    # empleadosCargos
+    path('empleadoCargo/<int:id>', empleadoCargo, name='get_empleadoCargo'),
+    # detalle planilla
+    path('detallePlanilla/<int:id>', detallePlanilla, name='get_detallePlanilla'),
+    # url planilla
+    path('membresiascliente/<int:id>', membresiasClientes, name='get_membresias_clientes'),
+    path('planilla/<int:id>', planilla, name='get_planilla'),
+    # url membresia cliente
+
 ]

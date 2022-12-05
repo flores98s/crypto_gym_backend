@@ -24,6 +24,53 @@ class PrecioHistoricoMembresia(models.Model):
     def __str__(self):
         return self.nombreMembresias
 
+# Modelo TipoDocumentoCliente.
+class TipoDocumentoCliente(models.Model):
+    nombreDocumento = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    
+    def __str__(self):
+        return self.nombreDocumento
+
+# Modelo TipoSangreCliente.
+class TipoSangreCliente(models.Model):
+    nombreSangre = models.CharField(validators=[MinLengthValidator(2),], max_length=50)
+   
+    def __str__(self):
+        return self.nombreSangre
+
+# Modelo TipoGeneroCliente.
+class TipoGeneroCliente(models.Model):
+    nombreGenero = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
+
+    def __str__(self):
+        return self.nombreGenero
+
+# Modelo Cliente.
+class Cliente(models.Model):
+    nombres = models.CharField(validators=[MinLengthValidator(2),validate_nombre], max_length=50)
+    apellidos = models.CharField(validators=[MinLengthValidator(2),validate_nombre], max_length=50)
+    clave = models.CharField(validators=[MinLengthValidator(3)], max_length=100)
+    foto = models.ImageField(upload_to='crypto_gym_backend/media/Clientes',default='crypto_gym_backend/media/Clientes/default.png')
+    fechaNacimiento = models.DateField(validators=[validate_fecha, validate_mayordedieciochoaños])
+    TipoDocumento = models.ForeignKey(TipoDocumentoCliente, on_delete=models.SET_NULL, null=True, blank=True)
+    numeroDocumento = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
+    correo = models.EmailField(unique=True)
+    numeroTelefono = models.CharField(validators=[validate_numerotelefono, MinLengthValidator(8)], max_length=(8))
+    genero = models.ForeignKey(TipoGeneroCliente, on_delete=models.SET_NULL, null=True, blank=True)
+    tipoSangre = models.ForeignKey(TipoSangreCliente, on_delete=models.SET_NULL, null=True, blank=True)
+    creado = models.DateField(default=timezone.now)
+    bloqueado = models.BooleanField(default=False)
+    activo = models.BooleanField(default=True)
+    # Membresia = models.ForeignKey(Membresia, on_delete=models.SET_NULL, null=True, blank=True)
+    # descuento = models.ForeignKey(Descuento, on_delete=models.SET_NULL, null=True, blank=True)
+    # rutina = models.ForeignKey(Rutina, on_delete=models.SET_NULL, null=True, blank=True)
+    # dieta = models.ForeignKey(Dieta, on_delete=models.SET_NULL, null=True, blank=True)
+    # medidas = models.ForeignKey(Medidas, on_delete=models.SET_NULL, null=True, blank=True)
+    intentos = models.IntegerField( default=0)
+
+    def __str__(self):
+        return self.nombres+" "+self.apellidos
+
 class Cupon(models.Model):
     NombreCodigoCupon = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
     fechaInicioCupon = models.DateTimeField()
@@ -42,39 +89,19 @@ class Descuento(models.Model):
     fechaFinal = models.DateTimeField()
     codigoCupon = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
     cantidadDescuento = models.IntegerField(validators=[MinValueValidator(1)])
+    cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=True)
 
-
-# Modelo Membresia.
+    # Modelo Membresia.
 class Membresia(models.Model):
     tipoMembresia = models.ForeignKey(TipoMembresia, on_delete=models.SET_NULL, null=True, blank=True)
     fechaInicio = models.DateTimeField()
     fechaFinal = models.DateTimeField()
     descuento = models.ForeignKey(Descuento, on_delete=models.SET_NULL, null=True, blank=True)
+    cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=True)
     
 
     def __str__(self):
-        return self.tipoMembresia
-
-# Modelo TipoGeneroCliente.
-class TipoGeneroCliente(models.Model):
-    nombreGenero = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
-
-    def __str__(self):
-        return self.nombreGenero
-
-# Modelo TipoDocumentoCliente.
-class TipoDocumentoCliente(models.Model):
-    nombreDocumento = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
-    
-    def __str__(self):
-        return self.nombreDocumento
-
-# Modelo TipoSangreCliente.
-class TipoSangreCliente(models.Model):
-    nombreSangre = models.CharField(validators=[MinLengthValidator(2),], max_length=50)
-   
-    def __str__(self):
-        return self.nombreSangre
+        return str(self.tipoMembresia) + " - " +  str(self.cliente)
 
 class Ejercicio(models.Model):
     nombre = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
@@ -111,6 +138,7 @@ class Rutina(models.Model):
     AsignacionRutina = models.ForeignKey(AsignacionRutina, on_delete=models.SET_NULL, null=True, blank=True)
     nombre = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
     tipoRutina = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=100)
+    cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.nombre
@@ -128,11 +156,12 @@ class AsignacionDieta(models.Model):
     hora = models.TimeField()
 
     def __str__(self):
-        return self.comida.nombre.__str__()
+        return str(self.comida)
 
 class Dieta(models.Model):
     asignacionDieta = models.ForeignKey(AsignacionDieta, on_delete=models.SET_NULL, null=True, blank=True)
     nombre = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
+    cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.nombre
@@ -153,6 +182,7 @@ class Medidas(models.Model):
     cintura = models.DecimalField(decimal_places=3,max_digits=10)
     pierna = models.DecimalField(decimal_places=3,max_digits=10)
     pantorrilla= models.DecimalField(decimal_places=3,max_digits=10)
+    cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=True)
    
     class Meta:
         verbose_name_plural = "Medidas"
@@ -160,31 +190,6 @@ class Medidas(models.Model):
     def __str__(self):
         return str(self.fechaMedida)
 
-# Modelo Cliente.
-class Cliente(models.Model):
-    nombres = models.CharField(validators=[MinLengthValidator(2),validate_nombre], max_length=50)
-    apellidos = models.CharField(validators=[MinLengthValidator(2),validate_nombre], max_length=50)
-    clave = models.CharField(validators=[MinLengthValidator(3)], max_length=100)
-    foto = models.ImageField(upload_to='crypto_gym_backend/media/Clientes',default='crypto_gym_backend/media/Clientes/default.png')
-    fechaNacimiento = models.DateField(validators=[validate_fecha, validate_mayordedieciochoaños])
-    TipoDocumento = models.ForeignKey(TipoDocumentoCliente, on_delete=models.SET_NULL, null=True, blank=True)
-    numeroDocumento = models.CharField(validators=[MinLengthValidator(3)], max_length=50)
-    correo = models.EmailField(unique=True)
-    numeroTelefono = models.CharField(validators=[validate_numerotelefono, MinLengthValidator(8)], max_length=(8))
-    genero = models.ForeignKey(TipoGeneroCliente, on_delete=models.SET_NULL, null=True, blank=True)
-    tipoSangre = models.ForeignKey(TipoSangreCliente, on_delete=models.SET_NULL, null=True, blank=True)
-    creado = models.DateField(default=timezone.now)
-    bloqueado = models.BooleanField(default=False)
-    activo = models.BooleanField(default=True)
-    Membresia = models.ForeignKey(Membresia, on_delete=models.SET_NULL, null=True, blank=True)
-    descuento = models.ForeignKey(Descuento, on_delete=models.SET_NULL, null=True, blank=True)
-    rutina = models.ForeignKey(Rutina, on_delete=models.SET_NULL, null=True, blank=True)
-    dieta = models.ForeignKey(Dieta, on_delete=models.SET_NULL, null=True, blank=True)
-    medidas = models.ForeignKey(Medidas, on_delete=models.SET_NULL, null=True, blank=True)
-    intentos = models.IntegerField( default=0)
-
-    def __str__(self):
-        return self.nombres+" "+self.apellidos
 
 #Modelo LogCliente.
 class LogCliente(models.Model):
@@ -220,6 +225,7 @@ class EmpleadoCargo(models.Model):
     cargo = models.ForeignKey(Cargo, on_delete=models.SET_NULL, null=True, blank=True)
     fechaInicio = models.DateTimeField()
     fechaFinal = models.DateTimeField()
+
 class DetallePlanilla(models.Model):
     sueldobruto = models.IntegerField(validators=[MinValueValidator(1)])
     deduccion = models.IntegerField(validators=[MinValueValidator(1)])
@@ -279,6 +285,7 @@ class ClaseGrupal(models.Model):
 # Modelo Asignacion Clase
 class AsignacionClase(models.Model):
     empleado = models.ForeignKey(Empleado, on_delete=models.SET_NULL, null=True, blank=True)
+    cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=True)
     nombreClase = models.ForeignKey(ClaseGrupal, on_delete=models.SET_NULL, null=True, blank=True)
     salon = models.ForeignKey(Salon, on_delete=models.SET_NULL, null=True, blank=True)
     horario = models.DateTimeField()

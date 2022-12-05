@@ -246,6 +246,7 @@ def loginCliente(request):
             else:
                 if check_password(clave, cliente.clave):
                     data = model_to_dict(cliente)
+                    data['foto'] = str(data['foto'])
                     return JsonResponse([{'auth': True, 'data': data}], safe=False)
                 else:
                     if cliente.intentos < 3:
@@ -336,6 +337,117 @@ def dieta(request, id):
         dietas = Dieta.objects.filter(id=id)
         if dietas:
             dietas.delete()
-            return JsonResponse({'data': 'Dieta eliminada'}, safe=False)
+        return JsonResponse({'data': 'Dieta eliminada'}, safe=False)
+    else:
+        return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+
+@csrf_exempt
+def parametrosFactura(request, id):
+    if request.method == 'GET':
+        parametrosFacturas = list(ParametrosFactura.objects.filter(id=id).values())
+        if parametrosFacturas:
+            return JsonResponse({'data': parametrosFacturas}, safe=False)
         else:
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    elif request.method == 'POST':
+        data = json.loads(request.body)
+        parametrosFacturas = ParametrosFactura.objects.create(**data)
+        return JsonResponse({'data': 'Parametros de factura creados'}, safe=False)
+    elif request.method == 'PUT':
+        data = json.loads(request.body)
+        parametrosFacturas = ParametrosFactura.objects.filter(id=id).update(**data)
+        return JsonResponse({'data': 'Parametros de factura actualizados'}, safe=False)
+    elif request.method == 'DELETE':
+        parametrosFacturas = ParametrosFactura.objects.filter(id=id)
+        if parametrosFacturas:
+            parametrosFacturas.delete()
+            return JsonResponse({'data': 'Parametros de factura eliminados'}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    return JsonResponse({'data': 'Parametros de factura eliminados'}, safe=False)
+
+@csrf_exempt
+def empleadoCargo(request, id):
+    if request.method == 'GET':
+        empleadosCargos = list(EmpleadoCargo.objects.filter(id=id).values())
+        if empleadosCargos:
+            return JsonResponse({'data': empleadosCargos}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    elif request.method == 'POST':
+        data = json.loads(request.body)
+        empleadosCargos = EmpleadoCargo.objects.create(**data)
+        return JsonResponse({'data': 'EmpleadoCargo creado'}, safe=False)
+    elif request.method == 'PUT':
+        data = json.loads(request.body)
+        empleadosCargos = EmpleadoCargo.objects.filter(id=id).update(**data)
+        return JsonResponse({'data': 'EmpleadoCargo actualizado'}, safe=False)
+    elif request.method == 'DELETE':
+        empleadosCargos = EmpleadoCargo.objects.filter(id=id)
+        if empleadosCargos:
+            empleadosCargos.delete()
+            return JsonResponse({'data': 'EmpleadoCargo eliminado'}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    return JsonResponse({'data': 'EmpleadoCargo eliminado'}, safe=False)
+
+@csrf_exempt
+def detallePlanilla(request, id):
+    if request.method == 'GET':
+        detallesPlanillas = list(DetallePlanilla.objects.filter(id=id).values())
+        if detallesPlanillas:
+            return JsonResponse({'data': detallesPlanillas}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    elif request.method == 'POST':
+        data = json.loads(request.body)
+        detallesPlanillas = DetallePlanilla.objects.create(**data)
+        return JsonResponse({'data': 'DetallePlanilla creado'}, safe=False)
+    elif request.method == 'PUT':
+        data = json.loads(request.body)
+        detallesPlanillas = DetallePlanilla.objects.filter(id=id).update(**data)
+        return JsonResponse({'data': 'DetallePlanilla actualizado'}, safe=False)
+    elif request.method == 'DELETE':
+        detallesPlanillas = DetallePlanilla.objects.filter(id=id)
+        if detallesPlanillas:
+            detallesPlanillas.delete()
+            return JsonResponse({'data': 'DetallePlanilla eliminado'}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    return JsonResponse({'data': 'DetallePlanilla eliminado'}, safe=False)
+
+
+@csrf_exempt
+def planilla(request, id):
+    if request.method == 'GET':
+        planillas = list(Planilla.objects.filter(id=id).values())
+        if planillas:
+            return JsonResponse({'data': planillas}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    elif request.method == 'POST':
+        data = json.loads(request.body)
+        planillas = Planilla.objects.create(**data)
+        return JsonResponse({'data': 'Planilla creada'}, safe=False)
+    elif request.method == 'PUT':
+        data = json.loads(request.body)
+        planillas = Planilla.objects.filter(id=id).update(**data)
+        return JsonResponse({'data': 'Planilla actualizada'}, safe=False)
+    elif request.method == 'DELETE':
+        planillas = Planilla.objects.filter(id=id)
+        if planillas:
+            planillas.delete()
+            return JsonResponse({'data': 'Planilla eliminada'}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    return JsonResponse({'data': 'Planilla eliminada'}, safe=False)
+
+@csrf_exempt
+def membresiasClientes(request, id):
+    if request.method == 'GET':
+        membresiasCliente = Membresia.objects.filter(cliente_id = id).values()
+        if membresiasCliente:
+            return JsonResponse({'data': membresiasCliente})
+        else:
+            return JsonResponse({'error':"No se encontro Cliente"})
+
