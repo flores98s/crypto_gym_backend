@@ -445,7 +445,8 @@ def planilla(request, id):
 @csrf_exempt
 def membresiasClientes(request, id):
     if request.method == 'GET':
-        membresiasCliente = Membresia.objects.filter(cliente_id = id).values()
+        membresiasCliente = Membresia.objects.filter(cliente = id).values()
+        membresiasCliente = list(membresiasCliente)
         if membresiasCliente:
             return JsonResponse({'data': membresiasCliente})
         else:
