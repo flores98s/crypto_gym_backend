@@ -341,6 +341,7 @@ def dieta(request, id):
     else:
         return JsonResponse({'data': 'No se encontró el id'}, safe=False)
 
+
 @csrf_exempt
 def parametrosFactura(request, id):
     if request.method == 'GET':
@@ -366,6 +367,7 @@ def parametrosFactura(request, id):
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
     return JsonResponse({'data': 'Parametros de factura eliminados'}, safe=False)
 
+
 @csrf_exempt
 def empleadoCargo(request, id):
     if request.method == 'GET':
@@ -390,6 +392,7 @@ def empleadoCargo(request, id):
         else:
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
     return JsonResponse({'data': 'EmpleadoCargo eliminado'}, safe=False)
+
 
 @csrf_exempt
 def detallePlanilla(request, id):
@@ -442,13 +445,16 @@ def planilla(request, id):
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
     return JsonResponse({'data': 'Planilla eliminada'}, safe=False)
 
+
 @csrf_exempt
 def membresiasClientes(request, id):
     if request.method == 'GET':
-        membresiasCliente = Membresia.objects.filter(cliente = id).values()
-        membresiasCliente = list(membresiasCliente)
-        if membresiasCliente:
-            return JsonResponse({'data': membresiasCliente})
-        else:
-            return JsonResponse({'error':"No se encontro Cliente"})
+        membresiasCliente = Membresia.objects.filter(cliente=id).values()
+        tipoMembresia = TipoMembresia.objects.filter(id=membresiasCliente[0]['tipoMembresia_id']).values()
 
+        if membresiasCliente:
+            membresiasCliente = membresiasCliente[0]
+            membresiasCliente['tipoMembresia'] = tipoMembresia[0]
+            return JsonResponse(membresiasCliente, safe=False)
+        else:
+            return JsonResponse({'error': "No se encontro Cliente"})
