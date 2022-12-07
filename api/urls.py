@@ -119,5 +119,7 @@ urlpatterns += [
     path('membresiascliente/<int:id>', membresiasClientes, name='get_membresias_clientes'),
     path('planilla/<int:id>', planilla, name='get_planilla'),
     # url membresia cliente
+    path('actualizarUltimaFactura/<int:id>', actualizarUltimaFactura, name='actualizarUltimaFactura'),
+    path('getFactura/<int:id>', getFacturaById, name='getFactura'),
 
 ]

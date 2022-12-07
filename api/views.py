@@ -465,3 +465,35 @@ def membresiasClientes(request, id):
             return JsonResponse(membresiasCliente, safe=False)
         else:
             return JsonResponse({'error': "No se encontro Cliente"})
+
+
+@csrf_exempt
+def actualizarUltimaFactura(request, id):
+    if request.method == 'PUT':
+        parametrosFactura = ParametrosFactura.objects.filter(id=id).values()
+        if parametrosFactura:
+            parametrosFactura = parametrosFactura[0]
+            parametrosFactura['ultimaFactura'] = parametrosFactura['ultimaFactura'] + 1
+            ParametrosFactura.objects.filter(id=id).update(**parametrosFactura)
+            return JsonResponse({'data': 'Ultima Factura Actualizada'}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+
+
+@csrf_exempt
+def getFacturaById(request, id):
+    if request.method == 'GET':
+        factura = Factura.objects.filter(id=id).values()
+        factura = factura[0]
+        factura['detalleFactura'] = DetalleFactura.objects.filter(id=factura['detalleFactura_id']).values()[0]
+        factura['cliente'] = Cliente.objects.filter(id=factura['cliente_id']).values()[0]
+
+
+        if factura:
+            return JsonResponse({'data': factura}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+
+
+
