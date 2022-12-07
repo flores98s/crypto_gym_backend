@@ -450,6 +450,9 @@ def planilla(request, id):
 def membresiasClientes(request, id):
     if request.method == 'GET':
         membresiasCliente = Membresia.objects.filter(cliente=id).values()
+
+        if len(membresiasCliente) <= 0:
+            return JsonResponse({'data': 'No tienes suscripcion activa', "suscripcionActiva": False,}, safe=False)
         tipoMembresia = TipoMembresia.objects.filter(id=membresiasCliente[0]['tipoMembresia_id']).values()
 
         if membresiasCliente:
@@ -458,6 +461,7 @@ def membresiasClientes(request, id):
             membresiasCliente['descripcionMembresia'] = tipoMembresia[0]['descripcion']
             membresiasCliente['precioMembresia'] = tipoMembresia[0]['precio']
             membresiasCliente['tiempoRestanteDias'] = (membresiasCliente['fechaFinal'] - datetime.now(timezone.utc)).days
+            membresiasCliente['SuscripcionActiva'] = True
             return JsonResponse(membresiasCliente, safe=False)
         else:
             return JsonResponse({'error': "No se encontro Cliente"})
