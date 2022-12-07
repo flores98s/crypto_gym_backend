@@ -454,7 +454,10 @@ def membresiasClientes(request, id):
 
         if membresiasCliente:
             membresiasCliente = membresiasCliente[0]
-            membresiasCliente['tipoMembresia'] = tipoMembresia[0]
+            membresiasCliente['NombreMembresia'] = tipoMembresia[0]['nombreMembresia']
+            membresiasCliente['descripcionMembresia'] = tipoMembresia[0]['descripcion']
+            membresiasCliente['precioMembresia'] = tipoMembresia[0]['precio']
+            membresiasCliente['tiempoRestanteDias'] = (membresiasCliente['fechaFinal'] - datetime.now(timezone.utc)).days
             return JsonResponse(membresiasCliente, safe=False)
         else:
             return JsonResponse({'error': "No se encontro Cliente"})
