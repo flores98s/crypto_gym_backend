@@ -338,7 +338,7 @@ class DetalleFactura(models.Model):
     total = models.DecimalField(decimal_places=3,max_digits=10)
 
     def __str__(self):
-        return self.producto
+        return str(self.producto)
 
 #Modelo Parametros Factura
 class ParametrosFactura(models.Model):
@@ -370,12 +370,12 @@ class Factura(models.Model):
     parametrosFactura = models.ForeignKey(ParametrosFactura, on_delete=models.SET_NULL, null=True, blank=True)
     impuesto = models.ForeignKey(Impuesto, on_delete=models.SET_NULL, null=True, blank=True)
     membresia = models.ForeignKey(Membresia, on_delete=models.SET_NULL, null=True, blank=True)
-    fecha = models.DateField(validators=[validate_fecha])
+    fecha = models.DateField()
     hora = models.TimeField()
     numeroFactura = models.IntegerField(validators=[MinValueValidator(1)])
 
     def __str__(self):
-        return self.detalleFactura
+        return str(self.detalleFactura) + " " + str(self.cliente) + " " + str(self.fecha)
 
 #Modelo Devolucion
 class Devolucion(models.Model):
