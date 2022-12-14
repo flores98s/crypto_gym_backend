@@ -121,6 +121,9 @@ class MusculoEjercicio(models.Model):
     musculo = models.ForeignKey(Musculo, on_delete=models.SET_NULL, null=True, blank=True)
     ejercicio = models.ForeignKey(Ejercicio, on_delete=models.SET_NULL, null=True, blank=True)
 
+    def __str__(self):
+        return self.musculo
+
 class AsignacionRutina(models.Model):
     MusculoEjercicio = models.ForeignKey(MusculoEjercicio, on_delete=models.SET_NULL, null=True, blank=True)
     series = models.IntegerField(validators=[MinValueValidator(0)])
@@ -129,7 +132,7 @@ class AsignacionRutina(models.Model):
     capacidad = models.IntegerField(validators=[MinValueValidator(0)])
 
     def __str__(self):
-        return self.MusculoEjercicio
+        return str(self.MusculoEjercicio)
 
     class Meta:
         verbose_name_plural = "Asignaciones Rutinas"
@@ -141,7 +144,7 @@ class Rutina(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return self.nombre
+        return str(self.nombre)
 
 class Comida(models.Model):
     nombre = models.CharField(validators=[MinLengthValidator(3),validate_nombre], max_length=50)
