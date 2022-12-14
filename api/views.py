@@ -341,6 +341,7 @@ def dieta(request, id):
     else:
         return JsonResponse({'data': 'No se encontró el id'}, safe=False)
 
+
 @csrf_exempt
 def parametrosFactura(request, id):
     if request.method == 'GET':
@@ -366,6 +367,7 @@ def parametrosFactura(request, id):
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
     return JsonResponse({'data': 'Parametros de factura eliminados'}, safe=False)
 
+
 @csrf_exempt
 def empleadoCargo(request, id):
     if request.method == 'GET':
@@ -390,6 +392,7 @@ def empleadoCargo(request, id):
         else:
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
     return JsonResponse({'data': 'EmpleadoCargo eliminado'}, safe=False)
+
 
 @csrf_exempt
 def detallePlanilla(request, id):
@@ -442,12 +445,55 @@ def planilla(request, id):
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
     return JsonResponse({'data': 'Planilla eliminada'}, safe=False)
 
+
 @csrf_exempt
 def membresiasClientes(request, id):
     if request.method == 'GET':
-        membresiasCliente = Membresia.objects.filter(cliente_id = id).values()
+        membresiasCliente = Membresia.objects.filter(cliente=id).values()
+
+        if len(membresiasCliente) <= 0:
+            return JsonResponse({'data': 'No tienes suscripcion activa', "suscripcionActiva": False,}, safe=False)
+        tipoMembresia = TipoMembresia.objects.filter(id=membresiasCliente[0]['tipoMembresia_id']).values()
+
         if membresiasCliente:
-            return JsonResponse({'data': membresiasCliente})
+            membresiasCliente = membresiasCliente[0]
+            membresiasCliente['NombreMembresia'] = tipoMembresia[0]['nombreMembresia']
+            membresiasCliente['descripcionMembresia'] = tipoMembresia[0]['descripcion']
+            membresiasCliente['precioMembresia'] = tipoMembresia[0]['precio']
+            membresiasCliente['tiempoRestanteDias'] = (membresiasCliente['fechaFinal'] - datetime.now(timezone.utc)).days
+            membresiasCliente['SuscripcionActiva'] = True
+            return JsonResponse(membresiasCliente, safe=False)
         else:
-            return JsonResponse({'error':"No se encontro Cliente"})
+            return JsonResponse({'error': "No se encontro Cliente"})
+
+
+@csrf_exempt
+def actualizarUltimaFactura(request, id):
+    if request.method == 'PUT':
+        parametrosFactura = ParametrosFactura.objects.filter(id=id).values()
+        if parametrosFactura:
+            parametrosFactura = parametrosFactura[0]
+            parametrosFactura['ultimaFactura'] = parametrosFactura['ultimaFactura'] + 1
+            ParametrosFactura.objects.filter(id=id).update(**parametrosFactura)
+            return JsonResponse({'data': 'Ultima Factura Actualizada'}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+
+
+@csrf_exempt
+def getFacturaById(request, id):
+    if request.method == 'GET':
+        factura = Factura.objects.filter(id=id).values()
+        factura = factura[0]
+        factura['detalleFactura'] = DetalleFactura.objects.filter(id=factura['detalleFactura_id']).values()[0]
+        factura['cliente'] = Cliente.objects.filter(id=factura['cliente_id']).values()[0]
+
+
+        if factura:
+            return JsonResponse({'data': factura}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+
+
 
