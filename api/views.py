@@ -79,7 +79,7 @@ def cliente(request, id):
 
 def rutina(request,id):
     if request.method == 'GET':
-        rutinas = list(Rutina.objects.all().values())
+        rutinas = list(Rutina.objects.filter(id=id).values())
         return JsonResponse({'data': rutinas}, safe=False)
     elif request.method == 'POST':
         data = json.loads(request.body)
@@ -97,6 +97,7 @@ def rutina(request,id):
         else:
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
         return JsonResponse({'data': 'Rutina eliminada'}, safe=False)
+    return JsonResponse({'data': 'No se encontró el id'}, safe=False)
 
 
 def membresia(request):
