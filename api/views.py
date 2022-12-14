@@ -77,7 +77,7 @@ def cliente(request, id):
     return JsonResponse({'data': 'No se encontró el id'}, safe=False)
 
 
-def rutina(request):
+def rutina(request,id):
     if request.method == 'GET':
         rutinas = list(Rutina.objects.all().values())
         return JsonResponse({'data': rutinas}, safe=False)
