@@ -45,7 +45,7 @@ def validate_mayordeveintiuno(value):
             raise ValidationError("El empleado no puede tener menos de 21 años")
 
 def validate_numerotelefono(value):
-    if not re.match("^[9|3|8][1-9]{7}", value):
+    if not re.match("^[2|9|3|8][1-9]{7}", value):
         raise ValidationError(
             (f'El número de teléfono debe empezar con 3, 8 o 9'),
         )
