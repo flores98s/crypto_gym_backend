@@ -97,7 +97,6 @@ def rutina(request):
         else:
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
         return JsonResponse({'data': 'Rutina eliminada'}, safe=False)
-    return JsonResponse({'data': 'No se encontró el id'}, safe=False)
 
 
 def membresia(request):
