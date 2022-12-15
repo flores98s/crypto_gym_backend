@@ -487,6 +487,9 @@ def getFacturaById(request, id):
         factura = factura[0]
         factura['detalleFactura'] = DetalleFactura.objects.filter(id=factura['detalleFactura_id']).values()[0]
         factura['cliente'] = Cliente.objects.filter(id=factura['cliente_id']).values()[0]
+        factura['membresia'] = Membresia.objects.filter(id=factura['membresia_id']).values()[0]
+        factura['tipoMembresia'] = TipoMembresia.objects.filter(id = factura['membresia']['tipoMembresia_id']).values()[0]
+
 
 
         if factura:
@@ -496,4 +499,13 @@ def getFacturaById(request, id):
     return JsonResponse({'data': 'No se encontró el id'}, safe=False)
 
 
+@csrf_exempt
+def getFacturaByCliente(request, id):
+    if request.method == 'GET':
+        factura = list(Factura.objects.filter(cliente=id).values())
+        if factura:
+            return JsonResponse({'data': factura}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    return JsonResponse({'data': 'No se encontró el id'}, safe=False)
 

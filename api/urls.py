@@ -121,5 +121,6 @@ urlpatterns += [
     # url membresia cliente
     path('actualizarUltimaFactura/<int:id>', actualizarUltimaFactura, name='actualizarUltimaFactura'),
     path('getFactura/<int:id>', getFacturaById, name='getFactura'),
+    path('getFacturaByCliente/<int:id>', getFacturaByCliente, name='getFacturaByCliente'),
 
 ]
