@@ -469,7 +469,7 @@ def membresiasClientes(request, id):
 
 @csrf_exempt
 def actualizarUltimaFactura(request, id):
-    if request.method == 'PUT':
+    if request.method == 'GET':
         parametrosFactura = ParametrosFactura.objects.filter(id=id).values()
         if parametrosFactura:
             parametrosFactura = parametrosFactura[0]
