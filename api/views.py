@@ -509,3 +509,42 @@ def getFacturaByCliente(request, id):
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
     return JsonResponse({'data': 'No se encontró el id'}, safe=False)
 
+@csrf_exempt
+def getRutinasByCliente(request, id):
+    if request.method == 'GET':
+        rutinas = list(Rutina.objects.filter(cliente=id).values())
+        if rutinas:
+            return JsonResponse({'data': rutinas}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+
+@csrf_exempt
+def getDietasByCliente(request, id):
+    if request.method == 'GET':
+        dietas = list(Dieta.objects.filter(cliente=id).values())
+        if dietas:
+            return JsonResponse({'data': dietas}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+
+@csrf_exempt
+def getAsignacionClaseByCliente(request, id):
+    if request.method == 'GET':
+        asignacionClase = list(AsignacionClase.objects.filter(cliente=id).values())
+        if asignacionClase:
+            return JsonResponse({'data': asignacionClase}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+
+@csrf_exempt
+def getMedidasByCliente(request, id):
+    if request.method == 'GET':
+        medidas = list(Medidas.objects.filter(cliente=id).values())
+        if medidas:
+            return JsonResponse({'data': medidas}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+    return JsonResponse({'data': 'No se encontró el id'}, safe=False)

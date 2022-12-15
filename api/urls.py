@@ -123,4 +123,11 @@ urlpatterns += [
     path('getFactura/<int:id>', getFacturaById, name='getFactura'),
     path('getFacturaByCliente/<int:id>', getFacturaByCliente, name='getFacturaByCliente'),
 
+    path('getRutinaByCliente/<int:id>', getRutinasByCliente, name='getRutinaByCliente'),
+    path('getDietaByCliente/<int:id>', getDietasByCliente, name='getDietaByCliente'),
+    path('getMedidasByCliente/<int:id>', getMedidasByCliente, name='getMedidasByCliente'),
+    path('getAsignacionClaseByCliente/<int:id>', getAsignacionClaseByCliente, name='getAsignacionClaseByCliente'),
+
+
+
 ]
