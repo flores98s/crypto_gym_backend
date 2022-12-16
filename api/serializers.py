@@ -240,6 +240,7 @@ class DevolucionSerializer(serializers.ModelSerializer):
 
 class ProductoSerializer(serializers.ModelSerializer):
     imagen = serializers.ImageField(max_length=None, use_url=True)
+    precioHistoricoProducto = serializers.StringRelatedField(read_only=True)
     class Meta:
         model = Producto
         fields = ('__all__')

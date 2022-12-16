@@ -317,6 +317,8 @@ class PrecioHistoricoProducto(models.Model):
     fechaFinal = models.DateField()
     precio = models.DecimalField(decimal_places=3,max_digits=10)
     
+    def __str__(self):
+        return str(self.precio)
 #-------------------------------------------------------------------------------------------------------------------------------
 #Modelo Producto
 class Producto(models.Model):
