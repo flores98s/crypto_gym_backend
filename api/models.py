@@ -122,7 +122,7 @@ class MusculoEjercicio(models.Model):
     ejercicio = models.ForeignKey(Ejercicio, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return self.musculo
+        return str(self.musculo)
 
 class AsignacionRutina(models.Model):
     MusculoEjercicio = models.ForeignKey(MusculoEjercicio, on_delete=models.SET_NULL, null=True, blank=True)
@@ -313,8 +313,8 @@ class Categoria(models.Model):
 
 #Modelo Precio Historico Producto
 class PrecioHistoricoProducto(models.Model):
-    fechaInicial = models.DateField(validators=[validate_fecha])
-    fechaFinal = models.DateField(validators=[validate_fecha])
+    fechaInicial = models.DateField()
+    fechaFinal = models.DateField()
     precio = models.DecimalField(decimal_places=3,max_digits=10)
     
 #-------------------------------------------------------------------------------------------------------------------------------
@@ -327,6 +327,7 @@ class Producto(models.Model):
    cantidad = models.IntegerField(validators=[MinValueValidator(1)])
    cantidadMinima = models.IntegerField(validators=[MinValueValidator(1)])
    precioHistoricoProducto = models.ForeignKey(PrecioHistoricoProducto, on_delete=models.SET_NULL, null=True, blank=True)
+   imagen = models.ImageField(upload_to='crypto_gym_backend/media/Productos',default='crypto_gym_backend/media/Productos/default.png')
 
    def __str__(self):
        return self.nombre
@@ -352,6 +353,7 @@ class ParametrosFactura(models.Model):
     rangoFinal = models.IntegerField(validators=[MinValueValidator(0)])
     codigoSucursal = models.IntegerField()
     ultimaFactura = models.IntegerField()
+    activo = models.BooleanField(default=True)
 
     def __str__(self):
         return self.cai

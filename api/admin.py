@@ -48,6 +48,7 @@ admin.site.register(PrecioHistoricoProducto)
 admin.site.register(Compra)
 admin.site.register(Administrador)
 admin.site.register(LoginAdministrador)
+admin.site.register(MusculoEjercicio)
 
 
 

@@ -239,6 +239,7 @@ class DevolucionSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 class ProductoSerializer(serializers.ModelSerializer):
+    imagen = serializers.ImageField(max_length=None, use_url=True)
     class Meta:
         model = Producto
         fields = ('__all__')
@@ -282,3 +283,8 @@ class LoginClienteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cliente
         fields = ['correo','clave',]
+
+class MusculoEjercicioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MusculoEjercicio
+        fields = ('__all__')

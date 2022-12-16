@@ -241,4 +241,9 @@ class LoginClienteViewSet(viewsets.ModelViewSet):
     queryset = Cliente.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = LoginClienteSerializer
+
+class MusculoEjercicioViewSet(viewsets.ModelViewSet):
+    queryset = MusculoEjercicio.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = MusculoEjercicioSerializer
     

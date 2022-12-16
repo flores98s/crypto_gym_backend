@@ -93,6 +93,7 @@ router.register('administrador', AdministradorViewSet, 'administradores')
 router.register('loginadministrador', LoginAdministradorViewSet, 'loginadministradores')
 # url Login Cliente
 router.register('login', LoginClienteViewSet, 'loginclientes')
+router.register('musculoejercicio', MusculoEjercicioViewSet, 'musculoejercicios')
 
 urlpatterns = router.urls
 
