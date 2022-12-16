@@ -5,6 +5,7 @@ import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password, check_password
+from datetime import datetime, date, timedelta
 
 
 # Create your views here.
@@ -343,11 +344,27 @@ def dieta(request, id):
 
 
 @csrf_exempt
-def parametrosFactura(request, id):
+def parametrosFactura(request):
+
     if request.method == 'GET':
-        parametrosFacturas = list(ParametrosFactura.objects.filter(id=id).values())
+        parametrosFacturas = ParametrosFactura.objects.latest('id')
+
         if parametrosFacturas:
-            return JsonResponse({'data': parametrosFacturas}, safe=False)
+            if str(parametrosFacturas.ultimaFactura) == str(parametrosFacturas.rangoFinal):
+            #     crear nueva parametrosFactura con rango inicial y final
+                parametrosFacturas = ParametrosFactura.objects.create(
+                    rangoInicial=parametrosFacturas.rangoFinal+1,
+                    rangoFinal=parametrosFacturas.rangoFinal+500,
+                    ultimaFactura=parametrosFacturas.rangoFinal+1,
+                    cai=parametrosFacturas.cai,
+                    fechaEmision= date.today(),
+                    fechaVencimiento= date.today() + timedelta(days=30),
+                    codigoSucursal=parametrosFacturas.codigoSucursal,
+                )
+                parametrosFacturas.save()
+                return JsonResponse({'data': model_to_dict(parametrosFacturas)}, safe=False)
+
+            return JsonResponse({'data': model_to_dict(parametrosFacturas)}, safe=False)
         else:
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
     elif request.method == 'POST':
@@ -470,12 +487,12 @@ def membresiasClientes(request, id):
 @csrf_exempt
 def actualizarUltimaFactura(request, id):
     if request.method == 'GET':
-        parametrosFactura = ParametrosFactura.objects.filter(id=id).values()
+        parametrosFactura = ParametrosFactura.objects.latest('id')
         if parametrosFactura:
-            parametrosFactura = parametrosFactura[0]
-            parametrosFactura['ultimaFactura'] = parametrosFactura['ultimaFactura'] + 1
-            ParametrosFactura.objects.filter(id=id).update(**parametrosFactura)
-            return JsonResponse({'data': 'Ultima Factura Actualizada'}, safe=False)
+            parametrosFactura.ultimaFactura = parametrosFactura.ultimaFactura + 1
+            parametrosFactura.save()
+            return JsonResponse({'data': "Ultima factura actualizada"}, safe=False)
+
         else:
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
 
@@ -548,3 +565,4 @@ def getMedidasByCliente(request, id):
         else:
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
     return JsonResponse({'data': 'No se encontró el id'}, safe=False)
+
