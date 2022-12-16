@@ -532,7 +532,11 @@ def getFacturaById(request, id):
 @csrf_exempt
 def getFacturaByCliente(request, id):
     if request.method == 'GET':
-        factura = list(Factura.objects.filter(cliente=id).values())
+        factura = list(Factura.objects.filter(cliente=id).order_by('-id').values())
+        if factura:
+            return JsonResponse({'data': factura}, safe=False)
+        else:
+            return JsonResponse({'data': 'No se encontró el id'}, safe=False)
         if factura:
             return JsonResponse({'data': factura}, safe=False)
         else:
