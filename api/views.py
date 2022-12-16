@@ -514,9 +514,10 @@ def getFacturaById(request, id):
         factura = Factura.objects.filter(id=id).values()
         factura = factura[0]
         factura['detalleFactura'] = DetalleFactura.objects.filter(id=factura['detalleFactura_id']).values()[0]
+        factura['producto'] = Producto.objects.filter(id=factura['detalleFactura']['producto_id']).values()[0]
         factura['cliente'] = Cliente.objects.filter(id=factura['cliente_id']).values()[0]
-        factura['membresia'] = Membresia.objects.filter(id=factura['membresia_id']).values()[0]
-        factura['tipoMembresia'] = TipoMembresia.objects.filter(id = factura['membresia']['tipoMembresia_id']).values()[0]
+        # factura['membresia'] = Membresia.objects.filter(id=factura['membresia_id']).values()[0]
+        # factura['tipoMembresia'] = TipoMembresia.objects.filter(id = factura['membresia']['tipoMembresia_id']).values()[0]
         factura['parametrosFactura'] = ParametrosFactura.objects.filter(id=factura['parametrosFactura_id']).values()[0]
 
 
