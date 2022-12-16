@@ -122,7 +122,7 @@ class MusculoEjercicio(models.Model):
     ejercicio = models.ForeignKey(Ejercicio, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return str(self.musculo)
+        return self.musculo
 
 class AsignacionRutina(models.Model):
     MusculoEjercicio = models.ForeignKey(MusculoEjercicio, on_delete=models.SET_NULL, null=True, blank=True)

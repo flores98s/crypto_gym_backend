@@ -111,7 +111,7 @@ urlpatterns += [
     path('ejercicio/<int:id>', ejercicio, name='get_ejercicio'),
     path('dieta/<int:id>', dieta, name='get_dieta'),
     # path('loginEmpleado/', loginEmpleado, name='loginEmpleado'),#
-    path('parametrosfactura/<int:id>', parametrosFactura, name='get_parametrosfactura'),
+    path('getparametrosfactura/', parametrosFactura, name='get_parametrosfactura'),
     # empleadosCargos
     path('empleadoCargo/<int:id>', empleadoCargo, name='get_empleadoCargo'),
     # detalle planilla
@@ -122,5 +122,13 @@ urlpatterns += [
     # url membresia cliente
     path('actualizarUltimaFactura/<int:id>', actualizarUltimaFactura, name='actualizarUltimaFactura'),
     path('getFactura/<int:id>', getFacturaById, name='getFactura'),
+    path('getFacturaByCliente/<int:id>', getFacturaByCliente, name='getFacturaByCliente'),
+
+    path('getRutinaByCliente/<int:id>', getRutinasByCliente, name='getRutinaByCliente'),
+    path('getDietaByCliente/<int:id>', getDietasByCliente, name='getDietaByCliente'),
+    path('getMedidasByCliente/<int:id>', getMedidasByCliente, name='getMedidasByCliente'),
+    path('getAsignacionClaseByCliente/<int:id>', getAsignacionClaseByCliente, name='getAsignacionClaseByCliente'),
+
+
 
 ]

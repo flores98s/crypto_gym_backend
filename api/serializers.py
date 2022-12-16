@@ -213,7 +213,7 @@ class MusculoSerializer(serializers.ModelSerializer):
 
 #-------------------------------------------------------------------------------------------------------------------------------
 class FacturaSerializer(serializers.ModelSerializer):
-    parametrosFactura = serializers.StringRelatedField(read_only=True)
+    # parametrosFactura = serializers.StringRelatedField(read_only=True)
     class Meta:
         model = Factura
         fields = ('__all__')
