@@ -347,16 +347,27 @@ def dieta(request, id):
 def parametrosFactura(request):
 
     if request.method == 'GET':
-        parametrosFacturas = ParametrosFactura.objects.latest('id')
+        # parametrosFacturas = ParametrosFactura.objects.latest('id')
+        parametrosFacturas = ParametrosFactura.objects.filter(activo=True).first()
+
 
         if parametrosFacturas:
             if str(parametrosFacturas.ultimaFactura) == str(parametrosFacturas.rangoFinal):
+                parametrosFacturas.activo = False
+                parametrosFacturas.save()
+
+                cai = parametrosFacturas.cai
+                cai = cai.split('-')
+                cai[-1] = str(int(cai[-1]) + 1)
+                cai = '-'.join(cai)
+
+
             #     crear nueva parametrosFactura con rango inicial y final
                 parametrosFacturas = ParametrosFactura.objects.create(
                     rangoInicial=parametrosFacturas.rangoFinal+1,
                     rangoFinal=parametrosFacturas.rangoFinal+500,
                     ultimaFactura=parametrosFacturas.rangoFinal+1,
-                    cai=parametrosFacturas.cai,
+                    cai=cai,
                     fechaEmision= date.today(),
                     fechaVencimiento= date.today() + timedelta(days=30),
                     codigoSucursal=parametrosFacturas.codigoSucursal,
