@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password, check_password
 from datetime import datetime, date, timedelta
-
+from .utilidades.exportar import generar_csv, generar_pdf
 
 # Create your views here.
 
@@ -583,3 +583,14 @@ def getMedidasByCliente(request, id):
             return JsonResponse({'data': 'No se encontró el id'}, safe=False)
     return JsonResponse({'data': 'No se encontró el id'}, safe=False)
 
+@csrf_exempt
+def exportEmpleadosCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'Empleado')
+        return response
+    
+@csrf_exempt
+def exportEmpleadosPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'Empleado')
+        return response

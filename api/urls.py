@@ -129,6 +129,6 @@ urlpatterns += [
     path('getMedidasByCliente/<int:id>', getMedidasByCliente, name='getMedidasByCliente'),
     path('getAsignacionClaseByCliente/<int:id>', getAsignacionClaseByCliente, name='getAsignacionClaseByCliente'),
 
-
-
-]
+    path('exportar/csv/empleados', exportEmpleadosCSV, name='exportarEmpleados'),
+    path('exportar/pdf/empleados', exportEmpleadosPDF, name='exportarEmpleados'),
+    ]
