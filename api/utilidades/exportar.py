@@ -60,15 +60,16 @@ def generar_csv(request, modelo_nombre):
 #     return response
 
 from django.http import HttpResponse
-import tablib
-from fpdf import FPDF
 from django.apps import apps
+from io import BytesIO
+from tablib import Dataset
+from fpdf import FPDF
 
 def generar_pdf(request, modelo_nombre):
     modelo = apps.get_model(app_label='api', model_name=modelo_nombre)
     queryset = modelo.objects.all()
     fields = [field.name for field in modelo._meta.fields]
-    data = tablib.Dataset(headers=fields)
+    data = Dataset(headers=fields)
     for obj in queryset:
         row = [getattr(obj, field) for field in fields]
         data.append(row)
@@ -76,40 +77,22 @@ def generar_pdf(request, modelo_nombre):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="mi_archivo.pdf"'
 
-    # Crear el PDF y establecer la fuente
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font('Arial', 'B', 16)
-
-    # Ajustar el ancho de las columnas al contenido
-    col_widths = []
-    for col in data.headers:
-        # Obtener el ancho máximo de la columna
-        max_width = pdf.get_string_width(col)
-        for row in data:
-            cell_width = pdf.get_string_width(str(row[col]))
-            if cell_width > max_width:
-                max_width = cell_width
-        col_widths.append(max_width + 6) # agregar un margen
-
-    # Crear la tabla y agregar los encabezados
-    pdf.set_fill_color(230, 230, 230)
-    pdf.set_text_color(0, 0, 0)
-    pdf.set_font('Arial', 'B', 12)
-    for i, col in enumerate(data.headers):
-        pdf.cell(col_widths[i], 10, col, 1, 0, 'C', True)
+    pdf.cell(40, 10, 'Datos del modelo ' + modelo_nombre)
     pdf.ln()
-
-    # Agregar los datos de la tabla
+    pdf.set_font('Arial', 'B', 12)
+    col_width = pdf.w / len(fields)
+    row_height = pdf.font_size * 2
+    for field in fields:
+        pdf.cell(col_width, row_height, str(field), border=1)
+    pdf.ln()
     pdf.set_font('Arial', '', 12)
     for row in data:
-        for i, col in enumerate(data.headers):
-            if isinstance(row[col], str) and len(row[col]) > 50:
-                # Agregar un salto de línea para ajustar el texto largo
-                pdf.multi_cell(col_widths[i], 10, row[col], 1)
-            else:
-                pdf.cell(col_widths[i], 10, str(row[col]), 1)
+        for item in row:
+            pdf.cell(col_width, row_height, str(item), border=1)
         pdf.ln()
 
-    pdf.output(response, 'F')
+    response.write(pdf.output(dest='S').encode('latin-1'))
     return response
