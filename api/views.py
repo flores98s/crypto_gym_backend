@@ -594,3 +594,315 @@ def exportEmpleadosPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'Empleado')
         return response
+    
+@csrf_exempt
+def exportTiposMembresiaCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'TipoMembresia')
+        return response
+    
+@csrf_exempt
+def exportTiposMembresiaPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'TipoMembresia')
+        return response
+    
+@csrf_exempt
+def exportPreciosHistoricoMembresiaCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'PrecioHistoricoMembresia')
+        return response
+    
+@csrf_exempt
+def exportPreciosHistoricoMembresiaPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'PrecioHistoricoMembresia')
+        return response
+    
+@csrf_exempt
+def exportTiposDocumentoClienteCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'TipoDocumentoCliente')
+        return response
+    
+@csrf_exempt
+def exportTiposDocumentoClientePDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'TipoDocumentoCliente')
+        return response
+    
+@csrf_exempt
+def exportTiposSangreClienteCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'TipoSangreCliente')
+        return response
+    
+@csrf_exempt
+def exportTiposSangreClientePDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'TipoSangreCliente')
+        return response
+    
+@csrf_exempt
+def exportClientesCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'Cliente')
+        return response
+    
+@csrf_exempt
+def exportClientesPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'Cliente')
+        return response
+    
+@csrf_exempt
+def exportCuponesCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'Cupon')
+        return response
+    
+@csrf_exempt
+def exportCuponesPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'Cupon')
+        return response
+    
+@csrf_exempt
+def exportDescuentosCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'Descuento')
+        return response
+    
+@csrf_exempt
+def exportDescuentosPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'Descuento')
+        return response
+    
+@csrf_exempt
+def exportMembresiasCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'Membresia')
+        return response
+    
+@csrf_exempt
+def exportMembresiasPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'Membresia')
+        return response
+    
+@csrf_exempt
+def exportEjerciciosCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'Ejercicio')
+        return response
+    
+@csrf_exempt
+def exportEjerciciosPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'Ejercicio')
+        return response
+    
+@csrf_exempt
+def exportMusculosCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'Musculo')
+        return response
+    
+@csrf_exempt
+def exportMusculosPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'Musculo')
+        return response
+    
+@csrf_exempt
+def exportMusculosEjerciciosCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'MusculoEjercicio')
+        return response
+    
+@csrf_exempt
+def exportMusculosEjerciciosPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'MusculoEjercicio')
+        return response
+    
+@csrf_exempt
+def exportAsignacionesRutinaCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'AsignacionRutina')
+        return response
+    
+@csrf_exempt
+def exportAsignacionesRutinaPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'AsignacionRutina')
+        return response
+    
+@csrf_exempt
+def exportRutinasCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'Rutina')
+        return response
+    
+@csrf_exempt
+def exportRutinasPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'Rutina')
+        return response
+    
+@csrf_exempt
+def exportComidasCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'Comida')
+        return response
+    
+@csrf_exempt
+def exportComidasPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'Comida')
+        return response
+    
+@csrf_exempt
+def exportAsignacionesDietaCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'AsignacionDieta')
+        return response
+    
+@csrf_exempt
+def exportAsignacionesDietaPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'AsignacionDieta')
+        return response
+    
+@csrf_exempt
+def exportDietasCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'Dieta')
+        return response
+    
+@csrf_exempt
+def exportDietasPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'Dieta')
+        return response
+    
+@csrf_exempt
+def exportMedidasCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'Medida')
+        return response
+    
+@csrf_exempt
+def exportMedidasPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'Medida')
+        return response
+    
+@csrf_exempt
+def exportLogClientesCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'LogCliente')
+        return response
+    
+@csrf_exempt
+def exportLogClientesPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'LogCliente')
+        return response
+    
+@csrf_exempt
+def exportTiposGeneroCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'TipoGenero')
+        return response
+    
+@csrf_exempt
+def exportTiposGeneroPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'TipoGenero')
+        return response
+    
+@csrf_exempt
+def exportDocumentosEmpleadoCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'DocumentoEmpleado')
+        return response
+    
+@csrf_exempt
+def exportDocumentosEmpleadoPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'DocumentoEmpleado')
+        return response
+    
+@csrf_exempt
+def exportCargosCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'Cargo')
+        return response
+    
+@csrf_exempt
+def exportCargosPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'Cargo')
+        return response
+    
+@csrf_exempt
+def exportEmpleadosCargoCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'EmpleadoCargo')
+        return response
+    
+@csrf_exempt
+def exportEmpleadosCargoPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'EmpleadoCargo')
+        return response
+    
+@csrf_exempt
+def exportDetallesPlanillaCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'DetallePlanilla')
+        return response
+    
+@csrf_exempt
+def exportDetallesPlanillaPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'DetallePlanilla')
+        return response
+    
+@csrf_exempt
+def exportPlanillasCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'Planilla')
+        return response
+    
+@csrf_exempt
+def exportPlanillasPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'Planilla')
+        return response
+    
+@csrf_exempt
+def exportFacturasCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'Factura')
+        return response
+    
+@csrf_exempt
+def exportFacturasPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'Factura')
+        return response
+    
+@csrf_exempt
+def exportParametrosFacturasCSV(request):
+    if request.method == "GET":
+        response = generar_csv(request, 'ParametrosFactura')
+        return response
+    
+@csrf_exempt
+def exportParametrosFacturasPDF(request):
+    if request.method == "GET":
+        response = generar_pdf(request, 'ParametrosFactura')
+        return response

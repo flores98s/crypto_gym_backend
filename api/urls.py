@@ -131,4 +131,42 @@ urlpatterns += [
 
     path('exportar/csv/empleados', exportEmpleadosCSV, name='exportarEmpleados'),
     path('exportar/pdf/empleados', exportEmpleadosPDF, name='exportarEmpleados'),
+    
+    path('exportar/csv/clientes', exportClientesCSV, name='exportarClientes'),
+    path('exportar/pdf/clientes', exportClientesPDF, name='exportarClientes'),
+    
+    path('exportar/csv/rutinas', exportRutinasCSV, name='exportarRutinas'),
+    path('exportar/pdf/rutinas', exportRutinasPDF, name='exportarRutinas'),
+    
+    path('exportar/csv/medidas', exportMedidasCSV, name='exportarMedidas'),
+    path('exportar/pdf/medidas', exportMedidasPDF, name='exportarMedidas'),
+    
+    path('exportar/csv/tiposdemembresias', exportTiposMembresiaCSV, name='exportarTiposMembresias'),
+    path('exportar/pdf/tiposdemembresias', exportTiposMembresiaPDF, name='exportarTiposMembresias'),
+    
+    path('exportar/csv/dietas', exportDietasCSV, name='exportarDietas'),
+    path('exportar/pdf/dietas', exportDietasPDF, name='exportarDietas'),
+
+    path('exportar/csv/factura', exportFacturasCSV, name='exportarFactura'),
+    path('exportar/pdf/factura', exportFacturasPDF, name='exportarFactura'),
+    
+    path('exportar/csv/cargos', exportCargosCSV, name='exportarCargos'),
+    path('exportar/pdf/cargos', exportCargosPDF, name='exportarCargos'),
+    
+    path('exportar/csv/asignacionderutinas', exportAsignacionesRutinaCSV, name='exportarAsignacionesRutinas'),
+    path('exportar/pdf/asignacionderutinas', exportAsignacionesRutinaPDF, name='exportarAsignacionesRutinas'),
+    
+    path('exportar/csv/parametrosdefactura', exportParametrosFacturasCSV, name='exportarParametrosFacturas'),
+    path('exportar/pdf/parametrosdefactura', exportParametrosFacturasPDF, name='exportarParametrosFacturas'),
+    
+    path('exportar/csv/empleadoscargo', exportEmpleadosCargoCSV, name='exportarEmpleadosCargo'),
+    path('exportar/pdf/empleadoscargo', exportEmpleadosCargoPDF, name='exportarEmpleadosCargo'),
+    
+    path('exportar/csv/detallesplanilla', exportDetallesPlanillaCSV, name='exportarDetallesPlanilla'),
+    path('exportar/pdf/detallesplainlla', exportDetallesPlanillaPDF, name='exportarDetallesPlanilla'),
+    
+    path('exportar/csv/planillas', exportPlanillasCSV, name='exportarPlanillas'),
+    path('exportar/pdf/planillas', exportPlanillasPDF, name='exportarPlanillas'),
+    
+    
     ]
