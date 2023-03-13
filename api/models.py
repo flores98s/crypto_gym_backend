@@ -438,3 +438,8 @@ class LoginAdministrador(models.Model):
     fecha = models.DateField(validators=[validate_fecha])
     hora = models.TimeField()
 
+class LogEntry(models.Model):
+    timestamp = models.DateTimeField(auto_now_add=True)
+    level = models.CharField(max_length=10)
+    logger = models.CharField(max_length=100)
+    message = models.TextField()

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'api',
     'rest_framework',
+    'django_db_logger',
 
 ]
 
@@ -139,3 +140,46 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#         'file': {
+#             'class': 'logging.FileHandler',
+#             'filename': os.path.join(BASE_DIR, 'logs', 'django.log'),
+#         },
+#         # 'database': {
+#         #     'class': 'django_db_logger.db_handler.DatabaseHandler',
+#         #     'model': 'api.LogEntry',
+#         # },
+#     },
+#     'loggers': {
+#         'django': {
+#             # 'handlers': ['console', 'file', 'database'],
+#             'handlers': ['console', 'file'],
+#             'level': 'DEBUG',
+#         },
+#     },
+# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'django.log'),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+    },
+}
+
