@@ -10,7 +10,7 @@ from .utilidades.exportar import generar_csv, generar_pdf
 import logging
 from api.models import LogEntry
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('db')
 # Create your views here.
 
 @csrf_exempt
@@ -1081,4 +1081,10 @@ def exportParametrosFacturasPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'ParametrosFactura')
         logger.info("Se exporto el archivo pdf de parametros de facturas")
+        try:
+            a = 1/0
+        except Exception as e:
+            print(e)
+            print(__name__)
+            logger.error(str(e))
         return response
