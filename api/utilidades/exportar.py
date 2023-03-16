@@ -141,6 +141,8 @@ def generar_pdf(request, modelo_nombre):
         pdf.cell(max_widths[i], row_height, str(fields[i]), border=1)
     pdf.ln()
 
+    pdf.line(10, 90, 290, 90)
+
     # Agregar datos a la tabla
     page_num = pdf.page_no()
     for row in data:
@@ -161,6 +163,8 @@ def generar_pdf(request, modelo_nombre):
     pdf.set_font('Arial', 'I', 8)
     pdf.cell(0, 10, f'Página {pdf.page_no()}', align='R')
 
+
+    pdf.line(10, 150, 290, 150)
 
     response.write(pdf.output(dest='S').encode('latin-1'))
     return response

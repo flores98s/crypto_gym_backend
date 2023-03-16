@@ -207,7 +207,7 @@ LOGGING = {
         },
         'django.request': { # logging 500 errors to database
             'handlers': ['db_log'],
-            'level': 'ERROR',
+            'level': 'DEBUG',
             'propagate': False,
         }
     }
