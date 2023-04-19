@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "corsheaders.middleware.CorsMiddleware",
+    'api.middleware.DatabaseTimeoutMiddleware',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -87,13 +88,21 @@ WSGI_APPLICATION = 'cryptoGym.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'crypto_gym2',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'gFdqNE1G2MDIaWm9ZSWf',
+    #     'HOST': 'containers-us-west-86.railway.app',
+    #     'PORT': 6903,
+    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'crypto_gym2',
+        'NAME': 'cryptoGym',
         'USER': 'postgres',
-        'PASSWORD': 'gFdqNE1G2MDIaWm9ZSWf',
-        'HOST': 'containers-us-west-86.railway.app',
-        'PORT': 6903,
+        'PASSWORD': '12345678',
+        'HOST': 'crypto-gym-production.cjreo3vfmhsh.us-east-2.rds.amazonaws.com',
+        'PORT': 5432,
     }
 
 }
@@ -141,6 +150,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
 
 # LOGGING = {
 #     'version': 1,
@@ -183,32 +198,114 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     },
 # }
 
+# # LOGGING = {
+# #     'version': 1,
+# #     'disable_existing_loggers': False,
+# #     'formatters': {
+# #         'verbose': {
+# #             'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+# #         },
+# #         'simple': {
+# #             'format': '%(levelname)s %(asctime)s %(message)s'
+# #         },
+# #     },
+# #     'handlers': {
+# #         'db_log': {
+# #             'level': 'DEBUG',
+# #             'class': 'django_db_logger.db_log_handler.DatabaseLogHandler'
+# #         },
+# #     },
+# #     'loggers': {
+# #         'db': {
+# #             'handlers': ['db_log'],
+# #             'level': 'DEBUG'
+# #         },
+# #         'django.request': { # logging 500 errors to database
+# #             'handlers': ['db_log'],
+# #             'level': 'DEBUG',
+# #             'propagate': False,
+# #         }
+# #     }
+# # }
+
+
+# import logging
+# import logging.handlers
+# import os
+# from datetime import datetime
+
+# LOG_DIR = os.path.join(BASE_DIR, 'logs') # Directorio donde se guardarán los archivos de registro
+# if not os.path.exists(LOG_DIR):
+#     os.mkdir(LOG_DIR)
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'default': {
+#             'format': '[%(asctime)s] %(levelname)s %(name)s: %(message)s',
+#             'datefmt': '%Y-%m-%d %H:%M:%S'
+#         }
+#     },
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'default',
+#             'level': logging.WARNING
+#         },
+#         'file': {
+#             'class': 'logging.handlers.TimedRotatingFileHandler',
+#             'formatter': 'default',
+#             'filename': os.path.join(LOG_DIR, f'{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.log'),
+#             'when': 'midnight',
+#             'backupCount': 7,
+#             'level': logging.WARNING
+#         }
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'handlers': ['console', 'file'],
+#             'level': 'WARNING',
+#             'propagate': False,
+#         }
+#     }
+# }
+
+
+import os
+import logging
+from logging.handlers import TimedRotatingFileHandler
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LOG_DIR = os.path.join(BASE_DIR, 'logs')
+
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
-        },
-        'simple': {
-            'format': '%(levelname)s %(asctime)s %(message)s'
+    'handlers': {
+        'timed_file': {
+            'level': 'WARNING',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(LOG_DIR, 'django_warning.log'),
+            'when': 'midnight',
+            'backupCount': 7,
+            'formatter': 'verbose',
         },
     },
-    'handlers': {
-        'db_log': {
-            'level': 'DEBUG',
-            'class': 'django_db_logger.db_log_handler.DatabaseLogHandler'
+    'formatters': {
+        'verbose': {
+            'format': '%(asctime)s %(levelname)s %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
         },
     },
     'loggers': {
-        'db': {
-            'handlers': ['db_log'],
-            'level': 'DEBUG'
+        'django': {
+            'handlers': ['timed_file'],
+            'level': 'WARNING',
+            'propagate': True,
         },
-        'django.request': { # logging 500 errors to database
-            'handlers': ['db_log'],
-            'level': 'DEBUG',
-            'propagate': False,
-        }
-    }
+    },
 }

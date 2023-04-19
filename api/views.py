@@ -9,6 +9,13 @@ from datetime import datetime, date, timedelta
 from .utilidades.exportar import generar_csv, generar_pdf
 import logging
 from api.models import LogEntry
+from django.contrib.auth.decorators import login_required, permission_required,user_passes_test
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.models import Group, User
+
+def user_is_member(user):
+    return user.groups.filter(name__in=['Exportar PDF','Exportar CSV']).exists()
+
 
 logger = logging.getLogger('db')
 # Create your views here.
@@ -706,6 +713,8 @@ def getMedidasByCliente(request, id):
     return JsonResponse({'data': 'No se encontró el id'}, safe=False)
 
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportEmpleadosCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'Empleado')
@@ -713,6 +722,8 @@ def exportEmpleadosCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportEmpleadosPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'Empleado')
@@ -720,6 +731,8 @@ def exportEmpleadosPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportTiposMembresiaCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'TipoMembresia')
@@ -727,6 +740,8 @@ def exportTiposMembresiaCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportTiposMembresiaPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'TipoMembresia')
@@ -734,6 +749,8 @@ def exportTiposMembresiaPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportPreciosHistoricoMembresiaCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'PrecioHistoricoMembresia')
@@ -748,6 +765,8 @@ def exportPreciosHistoricoMembresiaPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportTiposDocumentoClienteCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'TipoDocumentoCliente')
@@ -755,6 +774,8 @@ def exportTiposDocumentoClienteCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportTiposDocumentoClientePDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'TipoDocumentoCliente')
@@ -762,6 +783,8 @@ def exportTiposDocumentoClientePDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportTiposSangreClienteCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'TipoSangreCliente')
@@ -769,6 +792,8 @@ def exportTiposSangreClienteCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportTiposSangreClientePDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'TipoSangreCliente')
@@ -776,6 +801,8 @@ def exportTiposSangreClientePDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportClientesCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'Cliente')
@@ -783,6 +810,8 @@ def exportClientesCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportClientesPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'Cliente')
@@ -790,6 +819,8 @@ def exportClientesPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportCuponesCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'Cupon')
@@ -797,6 +828,8 @@ def exportCuponesCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportCuponesPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'Cupon')
@@ -804,6 +837,8 @@ def exportCuponesPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportDescuentosCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'Descuento')
@@ -811,6 +846,8 @@ def exportDescuentosCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportDescuentosPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'Descuento')
@@ -818,6 +855,8 @@ def exportDescuentosPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportMembresiasCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'Membresia')
@@ -825,6 +864,8 @@ def exportMembresiasCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportMembresiasPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'Membresia')
@@ -832,6 +873,8 @@ def exportMembresiasPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportEjerciciosCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'Ejercicio')
@@ -839,6 +882,8 @@ def exportEjerciciosCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportEjerciciosPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'Ejercicio')
@@ -846,6 +891,8 @@ def exportEjerciciosPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportMusculosCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'Musculo')
@@ -853,6 +900,8 @@ def exportMusculosCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportMusculosPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'Musculo')
@@ -860,6 +909,8 @@ def exportMusculosPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportMusculosEjerciciosCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'MusculoEjercicio')
@@ -867,6 +918,8 @@ def exportMusculosEjerciciosCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportMusculosEjerciciosPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'MusculoEjercicio')
@@ -874,6 +927,8 @@ def exportMusculosEjerciciosPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportAsignacionesRutinaCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'AsignacionRutina')
@@ -881,6 +936,8 @@ def exportAsignacionesRutinaCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportAsignacionesRutinaPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'AsignacionRutina')
@@ -888,6 +945,8 @@ def exportAsignacionesRutinaPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportRutinasCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'Rutina')
@@ -895,6 +954,8 @@ def exportRutinasCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportRutinasPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'Rutina')
@@ -902,6 +963,8 @@ def exportRutinasPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportComidasCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'Comida')
@@ -909,6 +972,8 @@ def exportComidasCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportComidasPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'Comida')
@@ -916,6 +981,8 @@ def exportComidasPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportAsignacionesDietaCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'AsignacionDieta')
@@ -923,6 +990,8 @@ def exportAsignacionesDietaCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportAsignacionesDietaPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'AsignacionDieta')
@@ -930,6 +999,8 @@ def exportAsignacionesDietaPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportDietasCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'Dieta')
@@ -937,6 +1008,8 @@ def exportDietasCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportDietasPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'Dieta')
@@ -944,6 +1017,8 @@ def exportDietasPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportMedidasCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'Medida')
@@ -951,6 +1026,8 @@ def exportMedidasCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportMedidasPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'Medida')
@@ -958,6 +1035,8 @@ def exportMedidasPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportLogClientesCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'LogCliente')
@@ -965,6 +1044,8 @@ def exportLogClientesCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportLogClientesPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'LogCliente')
@@ -972,6 +1053,8 @@ def exportLogClientesPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportTiposGeneroCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'TipoGenero')
@@ -979,6 +1062,8 @@ def exportTiposGeneroCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportTiposGeneroPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'TipoGenero')
@@ -986,6 +1071,8 @@ def exportTiposGeneroPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportDocumentosEmpleadoCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'DocumentoEmpleado')
@@ -993,6 +1080,8 @@ def exportDocumentosEmpleadoCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportDocumentosEmpleadoPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'DocumentoEmpleado')
@@ -1000,6 +1089,8 @@ def exportDocumentosEmpleadoPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportCargosCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'Cargo')
@@ -1007,6 +1098,8 @@ def exportCargosCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportCargosPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'Cargo')
@@ -1014,6 +1107,8 @@ def exportCargosPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportEmpleadosCargoCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'EmpleadoCargo')
@@ -1021,6 +1116,8 @@ def exportEmpleadosCargoCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportEmpleadosCargoPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'EmpleadoCargo')
@@ -1028,6 +1125,8 @@ def exportEmpleadosCargoPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportDetallesPlanillaCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'DetallePlanilla')
@@ -1035,6 +1134,8 @@ def exportDetallesPlanillaCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportDetallesPlanillaPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'DetallePlanilla')
@@ -1042,6 +1143,8 @@ def exportDetallesPlanillaPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportPlanillasCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'Planilla')
@@ -1049,6 +1152,8 @@ def exportPlanillasCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportPlanillasPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'Planilla')
@@ -1056,6 +1161,8 @@ def exportPlanillasPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportFacturasCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'Factura')
@@ -1063,6 +1170,8 @@ def exportFacturasCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportFacturasPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'Factura')
@@ -1070,6 +1179,8 @@ def exportFacturasPDF(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportParametrosFacturasCSV(request):
     if request.method == "GET":
         response = generar_csv(request, 'ParametrosFactura')
@@ -1077,6 +1188,8 @@ def exportParametrosFacturasCSV(request):
         return response
     
 @csrf_exempt
+@login_required
+@user_passes_test(user_is_member)
 def exportParametrosFacturasPDF(request):
     if request.method == "GET":
         response = generar_pdf(request, 'ParametrosFactura')
@@ -1088,3 +1201,4 @@ def exportParametrosFacturasPDF(request):
             print(__name__)
             logger.error(str(e))
         return response
+    

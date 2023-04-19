@@ -3,6 +3,14 @@
 import os
 import sys
 
+import subprocess
+
+# el archivo a correr se encuentra en la misma carpeta que este archivo
+ruta = os.path.join(os.path.dirname(os.path.abspath(__file__)), "db_check.py")
+
+subprocess.call(["python", ruta])
+
+
 
 def main():
     """Run administrative tasks."""

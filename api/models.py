@@ -443,3 +443,14 @@ class LogEntry(models.Model):
     level = models.CharField(max_length=10)
     logger = models.CharField(max_length=100)
     message = models.TextField()
+    
+    class Meta:
+        permissions = [('expportarCSV', 'Exportar CSV'),('exportarPDF', 'Exportar PDF')]
+
+from django.contrib.auth.models import Permission
+
+# class Exportar(models.Model):
+#     nombre = models.CharField( max_length=50,default='Exportar')
+#     # class Meta:
+#     #     permissions = [('exportarCSV', 'Exportar CSV'),('exportarPDF', 'Exportar PDF')]
+
